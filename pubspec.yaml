@@ -1,0 +1,99 @@
+name: taskly
+
+description: "An app that shares user information"
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI
+  cupertino_icons: ^1.0.8
+
+  # Navigation
+  go_router: ^14.3.0
+
+  # Dependency Injection
+  injectable: ^2.5.0
+
+  # Modules
+  core:
+    path: modules/core
+  shared:
+    path: modules/shared
+  splash:
+    path: modules/features/splash
+  dashboard: 
+    path: modules/features/dashboard
+  settings:
+    path: modules/features/settings
+  project:
+    path: modules/features/project
+  section:
+    path: modules/features/project/modules/section
+  task:
+    path: modules/features/project/modules/task
+  comment:
+    path: modules/features/project/modules/comment
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.3
+  injectable_generator: ^2.6.2
+
+flutter:
+  uses-material-design: true
+  generate: true
+
+  assets:
+   - assets/images/
+   - assets/icons/
+   - assets/animations/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Thin.ttf
+          weight: 100
+          style: normal
+
+        - asset: assets/fonts/Inter-ExtraLight.ttf
+          weight: 200
+          style: normal
+
+        - asset: assets/fonts/Inter-Light.ttf
+          weight: 300
+          style: normal
+
+        - asset: assets/fonts/Inter-Regular.ttf
+          weight: 400
+          style: normal
+
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+          style: normal
+
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+          style: normal
+
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
+          style: normal
+
+        - asset: assets/fonts/Inter-ExtraBold.ttf
+          weight: 800
+          style: normal
+
+        - asset: assets/fonts/Inter-Black.ttf
+          weight: 900
+          style: normal

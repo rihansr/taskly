@@ -1,0 +1,90 @@
+{
+  "@@locale": "en",
+  "@_TITLES": "<-----------------TITLES----------------->",
+  "@_LABELS": "<-----------------LABELS----------------->",
+  "appName": "Taskly",
+  "okay": "Okay",
+  "retry": "Retry",
+  "cancel": "Cancel",
+  "settings": "Settings",
+  "language": "Language",
+  "thememode": "Theme Mode",
+  "annonymous": "Annonymous",
+  "@_HINTS": "<-----------------HINTS----------------->",
+  "@_MESSAGES": "<-----------------MESSAGES----------------->",
+  "someErrorOccured": "Some Error Occured!",
+  "networkNotAvailable": "Network not available!",
+  "requestTimeout": "Request timeout!",
+  "noDataFound": "No data found!",
+  "emptyField": "{field, select, null{Field} other {{field}}} is required",
+  "@emptyField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "inputLengthError": "{field, select, null{Field must be {min}-{max} characters long} other {{field} must be {min}-{max} characters long}}",
+  "@inputLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMinLengthError": "{field, select, null{Field must have at least {min} characters} other {{field} must have at least {min} characters}}",
+  "@inputMinLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "min": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxLengthError": "{field, select, null{Field can contain upto {max} characters} other {{field} can contain upto {max} characters}}",
+  "@inputMaxLengthError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "inputMaxValueError": "{field, select, null{Field max limit {value} characters} other {{field} max limit {value}}}",
+  "@inputMaxValueError": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "fieldNotMatch": "{field, select, null{Field} other {{field}}} doesn't match",
+  "@fieldNotMatch": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "notValidField": "Enter a valid {field, select, null{Field} other {{field}}}",
+  "@notValidField": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  }
+}
