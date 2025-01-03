@@ -27,3 +27,8 @@ migrate_working_dir/
 **/doc/api/
 .dart_tool/
 build/
+
+# Remove generated files
+*.g.dart
+*.freezed.dart
+*.module.dart

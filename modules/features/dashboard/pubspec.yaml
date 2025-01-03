@@ -1,5 +1,5 @@
 name: dashboard
-description: "Dashboard module"
+description: "Package for dashboard functionalities"
 version: 0.0.1
 publish_to: 'none'
 

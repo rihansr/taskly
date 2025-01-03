@@ -24,6 +24,10 @@ dependencies:
   # State Management
   flutter_bloc: ^8.1.6
 
+  # Code Generation
+  freezed_annotation: ^2.4.4
+  freezed: ^2.5.7
+
   # UI
   iconsax: ^0.0.8
   flutter_svg: ^2.0.14
