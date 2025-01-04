@@ -55,6 +55,48 @@ class TaskModel extends Equatable {
     this.url,
   });
 
+  TaskModel copyWith({
+    String? creatorId,
+    DateTime? createdAt,
+    String? assigneeId,
+    String? assignerId,
+    int? commentCount,
+    bool? isCompleted,
+    String? content,
+    String? description,
+    DueModel? due,
+    DurationModel? duration,
+    String? id,
+    List<String>? labels,
+    int? order,
+    int? priority,
+    String? projectId,
+    String? sectionId,
+    String? parentId,
+    String? url,
+  }) {
+    return TaskModel(
+      creatorId: creatorId ?? this.creatorId,
+      createdAt: createdAt ?? this.createdAt,
+      assigneeId: assigneeId ?? this.assigneeId,
+      assignerId: assignerId ?? this.assignerId,
+      commentCount: commentCount ?? this.commentCount,
+      isCompleted: isCompleted ?? this.isCompleted,
+      content: content ?? this.content,
+      description: description ?? this.description,
+      due: due ?? this.due,
+      duration: duration ?? this.duration,
+      id: id ?? this.id,
+      labels: labels ?? this.labels,
+      order: order ?? this.order,
+      priority: priority ?? this.priority,
+      projectId: projectId ?? this.projectId,
+      sectionId: sectionId ?? this.sectionId,
+      parentId: parentId ?? this.parentId,
+      url: url ?? this.url,
+    );
+  }
+
   factory TaskModel.fromJson(Map<String, dynamic> json) =>
       _$TaskModelFromJson(json);
 

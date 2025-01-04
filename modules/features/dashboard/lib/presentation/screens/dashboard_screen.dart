@@ -1,5 +1,7 @@
+import 'package:project/presentation/bloc/projects_bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/presentation/bloc/bloc.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({super.key});
@@ -9,6 +11,12 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  @override
+  void initState() {
+    context.read<ProjectsBloc>().add(const ProjectsEvent.allProjects());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);

@@ -8,7 +8,6 @@ import 'dart:async' as _i687;
 
 import 'package:injectable/injectable.dart' as _i526;
 
-import 'data/data_sources/tasks_api.dart' as _i419;
 import 'data/data_sources/tasks_api_impl.dart' as _i656;
 import 'data/repositories/tasks_repository_impl.dart' as _i500;
 import 'domain/repositories/tasks_repository.dart' as _i411;
@@ -27,7 +26,9 @@ class TaskPackageModule extends _i526.MicroPackageModule {
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.lazySingleton<_i656.TasksApiImpl>(() => _i656.TasksApiImpl());
     gh.lazySingleton<_i411.TasksRepository>(
-        () => _i500.TasksRepositoryImpl(gh<_i419.TasksApi>()));
+        () => _i500.TasksRepositoryImpl(gh<_i656.TasksApiImpl>()));
+    gh.lazySingleton<_i376.SharedLabelsUseCase>(
+        () => _i376.SharedLabelsUseCase(gh<_i411.TasksRepository>()));
     gh.lazySingleton<_i1018.UpdateTaskUseCase>(
         () => _i1018.UpdateTaskUseCase(gh<_i411.TasksRepository>()));
     gh.lazySingleton<_i559.CloseTaskUseCase>(
@@ -42,7 +43,5 @@ class TaskPackageModule extends _i526.MicroPackageModule {
         () => _i689.ActiveTasksUseCase(gh<_i411.TasksRepository>()));
     gh.lazySingleton<_i471.ReopenTaskUseCase>(
         () => _i471.ReopenTaskUseCase(gh<_i411.TasksRepository>()));
-    gh.lazySingleton<_i376.SharedLabelsUseCase>(
-        () => _i376.SharedLabelsUseCase(gh<_i411.TasksRepository>()));
   }
 }

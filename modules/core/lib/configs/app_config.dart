@@ -18,9 +18,11 @@ class _AppConfig {
   final _configs = {
     "debug": {
       "base_url": "https://api.todoist.com/rest/v2",
+      "auth_token": "bGDZ5Uk1Wpylnyt1q70zeoGJ83vBiXFaDPrfiMTgiill6aorkMRf67Pq3qVAnJXC",
     },
     "production": {
       "base_url": "https://api.todoist.com/rest/v2",
+      "auth_token": "bGDZ5Uk1Wpylnyt1q70zeoGJ83vBiXFaDPrfiMTgiill6aorkMRf67Pq3qVAnJXC",
     }
   };
 }

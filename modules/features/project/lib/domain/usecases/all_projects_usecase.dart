@@ -2,7 +2,7 @@ import 'package:core/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/data/data_sources/remote/error/failures.dart';
 import '../models/project_model.dart';
-import '../repositories/project_repository.dart';
+import '../repositories/projects_repository.dart';
 
 @LazySingleton()
 class AllProjectsUseCase {

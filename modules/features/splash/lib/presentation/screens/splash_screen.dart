@@ -1,5 +1,10 @@
 import 'dart:async';
+import 'package:core/configs/app_config.dart';
 import 'package:core/router/routes.dart';
+import 'package:core/utils/debug.dart';
+import 'package:core/utils/encryptor.dart';
+import 'package:shared/data/data_sources/local/shared_prefs.dart';
+import 'package:shared/di/service_locator.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
 import 'package:core/styles/styles.dart';
 import 'package:core/utils/constants.dart';
@@ -18,6 +23,9 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
+    if (sl<SharedPrefs>().token == null) {
+      sl<SharedPrefs>().token = appConfig.config['auth_token'];
+    }
     _timer = Timer(kSplashTimeout, _navigateTo);
     super.initState();
   }

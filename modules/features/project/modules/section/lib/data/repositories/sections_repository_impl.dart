@@ -3,21 +3,21 @@ import 'package:injectable/injectable.dart';
 import 'package:shared/data/data_sources/remote/network.dart';
 import '../../domain/models/section_model.dart';
 import '../../domain/repositories/sections_repository.dart';
-import '../data_sources/sections_api.dart';
+import '../data_sources/sections_api_impl.dart';
 
 @LazySingleton(as: SectionsRepository)
 class SectionsRepositoryImpl extends SectionsRepository {
-  final SectionsApi usersApi;
+  final SectionsApiImpl sectionsApi;
 
   SectionsRepositoryImpl(
-    this.usersApi,
+    this.sectionsApi,
   );
 
   @override
   Future<Either<Failure, List<SectionModel>>> allSections(
       Map<String, dynamic> queryParams) async {
     try {
-      final result = await usersApi.getAllProjectSections(queryParams);
+      final result = await sectionsApi.getAllProjectSections(queryParams);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));
@@ -29,7 +29,7 @@ class SectionsRepositoryImpl extends SectionsRepository {
   @override
   Future<Either<Failure, SectionModel>> singleSection(String id) async {
     try {
-      final result = await usersApi.getSectionById(id);
+      final result = await sectionsApi.getSectionById(id);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));
@@ -42,7 +42,7 @@ class SectionsRepositoryImpl extends SectionsRepository {
   Future<Either<Failure, SectionModel>> createSection(
       Map<String, dynamic> data) async {
     try {
-      final result = await usersApi.createNewSection(data);
+      final result = await sectionsApi.createNewSection(data);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));
@@ -55,7 +55,7 @@ class SectionsRepositoryImpl extends SectionsRepository {
   Future<Either<Failure, SectionModel>> updateSection(
       SectionModel section) async {
     try {
-      final result = await usersApi.updateSection(section);
+      final result = await sectionsApi.updateSection(section);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));
@@ -67,7 +67,7 @@ class SectionsRepositoryImpl extends SectionsRepository {
   @override
   Future<Either<Failure, bool>> deleteSection(String id) async {
     try {
-      final result = await usersApi.deleteSection(id);
+      final result = await sectionsApi.deleteSection(id);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));

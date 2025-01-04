@@ -8,7 +8,6 @@ import 'dart:async' as _i687;
 
 import 'package:injectable/injectable.dart' as _i526;
 
-import 'data/data_sources/comments_api.dart' as _i470;
 import 'data/data_sources/comments_api_impl.dart' as _i844;
 import 'data/repositories/comments_repository_impl.dart' as _i190;
 import 'domain/repositories/comments_repository.dart' as _i802;
@@ -24,7 +23,7 @@ class CommentPackageModule extends _i526.MicroPackageModule {
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
     gh.lazySingleton<_i844.CommentsApiImpl>(() => _i844.CommentsApiImpl());
     gh.lazySingleton<_i802.CommentsRepository>(
-        () => _i190.CommentsRepositoryImpl(gh<_i470.CommentsApi>()));
+        () => _i190.CommentsRepositoryImpl(gh<_i844.CommentsApiImpl>()));
     gh.lazySingleton<_i372.SingleCommentUseCase>(
         () => _i372.SingleCommentUseCase(gh<_i802.CommentsRepository>()));
     gh.lazySingleton<_i471.AllCommentsUseCase>(

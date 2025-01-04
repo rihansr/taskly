@@ -16,6 +16,8 @@ dependencies:
     path: ../../core
   shared:
     path: ../../shared
+  project:
+    path: ../project
   settings:
     path: ../settings
 
