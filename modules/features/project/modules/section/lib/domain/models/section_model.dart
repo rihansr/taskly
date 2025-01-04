@@ -24,7 +24,5 @@ class SectionModel extends Equatable {
   List<Object?> get props => [
         id,
         projectId,
-        order,
-        name,
       ];
 }

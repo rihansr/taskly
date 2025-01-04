@@ -50,16 +50,6 @@ class ProjectModel extends Equatable {
   @override
   List<Object?> get props => [
         id,
-        name,
-        commentCount,
-        order,
-        color,
-        isShared,
-        isFavorite,
         parentId,
-        isInboxProject,
-        isTeamInbox,
-        viewStyle,
-        url,
       ];
 }
