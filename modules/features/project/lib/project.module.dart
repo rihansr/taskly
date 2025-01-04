@@ -8,6 +8,9 @@ import 'dart:async' as _i687;
 
 import 'package:injectable/injectable.dart' as _i526;
 
+import 'data/data_sources/projects_api.dart' as _i994;
+import 'data/data_sources/projects_api_impl.dart' as _i1034;
+import 'data/repositories/projects_repository_impl.dart' as _i16;
 import 'domain/repositories/project_repository.dart' as _i17;
 import 'domain/usecases/all_projects_usecase.dart' as _i775;
 import 'domain/usecases/create_project_usecase.dart' as _i1015;
@@ -19,15 +22,18 @@ class ProjectPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
+    gh.lazySingleton<_i1034.ProjectsApiImpl>(() => _i1034.ProjectsApiImpl());
+    gh.lazySingleton<_i17.ProjectsRepository>(
+        () => _i16.ProjectsRepositoryImpl(gh<_i994.ProjectsApi>()));
     gh.lazySingleton<_i130.SingleProjectUseCase>(
-        () => _i130.SingleProjectUseCase(gh<_i17.ProjectRepository>()));
+        () => _i130.SingleProjectUseCase(gh<_i17.ProjectsRepository>()));
     gh.lazySingleton<_i775.AllProjectsUseCase>(
-        () => _i775.AllProjectsUseCase(gh<_i17.ProjectRepository>()));
+        () => _i775.AllProjectsUseCase(gh<_i17.ProjectsRepository>()));
     gh.lazySingleton<_i177.DeleteProjectUseCase>(
-        () => _i177.DeleteProjectUseCase(gh<_i17.ProjectRepository>()));
+        () => _i177.DeleteProjectUseCase(gh<_i17.ProjectsRepository>()));
     gh.lazySingleton<_i1015.CreateProjectUseCase>(
-        () => _i1015.CreateProjectUseCase(gh<_i17.ProjectRepository>()));
+        () => _i1015.CreateProjectUseCase(gh<_i17.ProjectsRepository>()));
     gh.lazySingleton<_i589.UpdateProjectUseCase>(
-        () => _i589.UpdateProjectUseCase(gh<_i17.ProjectRepository>()));
+        () => _i589.UpdateProjectUseCase(gh<_i17.ProjectsRepository>()));
   }
 }

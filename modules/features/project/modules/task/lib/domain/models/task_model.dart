@@ -60,6 +60,10 @@ class TaskModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$TaskModelToJson(this);
 
+  static List<TaskModel> fromJsonList(List<dynamic> json) {
+    return json.map((e) => TaskModel.fromJson(e)).toList();
+  }
+
   @override
   bool get stringify => true;
 

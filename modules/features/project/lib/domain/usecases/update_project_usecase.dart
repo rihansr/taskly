@@ -6,12 +6,12 @@ import '../repositories/project_repository.dart';
 
 @LazySingleton()
 class UpdateProjectUseCase {
-  final ProjectRepository repository;
+  final ProjectsRepository repository;
 
   UpdateProjectUseCase(this.repository);
 
-  Future<Either<Failure, ProjectModel>> invoke(Map<String, dynamic> data) async {
-    final result = await repository.updateProject(data);
+  Future<Either<Failure, ProjectModel>> invoke(ProjectModel project) async {
+    final result = await repository.updateProject(project);
     return result.fold((l) {
       return Left(l);
     }, (r) async {

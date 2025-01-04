@@ -44,6 +44,9 @@ class ProjectModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$ProjectModelToJson(this);
 
+  static List<ProjectModel> fromJsonList(List<dynamic> json) =>
+      json.map((e) => ProjectModel.fromJson(e)).toList();
+
   @override
   bool get stringify => true;
 

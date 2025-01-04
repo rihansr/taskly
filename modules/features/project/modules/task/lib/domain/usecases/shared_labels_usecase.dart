@@ -4,13 +4,13 @@ import 'package:shared/data/data_sources/remote/error/failures.dart';
 import '../repositories/tasks_repository.dart';
 
 @LazySingleton()
-class CloseTaskUseCase {
+class SharedLabelsUseCase {
   final TasksRepository repository;
 
-  CloseTaskUseCase(this.repository);
+  SharedLabelsUseCase(this.repository);
 
-  Future<Either<Failure, bool>> invoke(String id) async {
-    final result = await repository.reopenTask(id);
+  Future<Either<Failure, List<String>>> invoke() async {
+    final result = await repository.sharedLabels();
     return result.fold((l) {
       return Left(l);
     }, (r) async {

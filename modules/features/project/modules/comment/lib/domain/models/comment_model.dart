@@ -29,6 +29,10 @@ class CommentModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$CommentModelToJson(this);
 
+  static List<CommentModel> fromJsonList(List<dynamic> json) {
+    return json.map((e) => CommentModel.fromJson(e)).toList();
+  }
+
   @override
   bool get stringify => true;
 

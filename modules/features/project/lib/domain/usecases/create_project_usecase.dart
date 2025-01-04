@@ -6,11 +6,12 @@ import '../repositories/project_repository.dart';
 
 @LazySingleton()
 class CreateProjectUseCase {
-  final ProjectRepository repository;
+  final ProjectsRepository repository;
 
   CreateProjectUseCase(this.repository);
 
-  Future<Either<Failure, ProjectModel>> invoke(Map<String, dynamic> data) async {
+  Future<Either<Failure, ProjectModel>> invoke(
+      Map<String, dynamic> data) async {
     final result = await repository.createProject(data);
     return result.fold((l) {
       return Left(l);

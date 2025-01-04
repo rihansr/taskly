@@ -8,7 +8,10 @@ import 'dart:async' as _i687;
 
 import 'package:injectable/injectable.dart' as _i526;
 
-import 'domain/repositories/comment_repository.dart' as _i60;
+import 'data/data_sources/comments_api.dart' as _i470;
+import 'data/data_sources/comments_api_impl.dart' as _i844;
+import 'data/repositories/comments_repository_impl.dart' as _i190;
+import 'domain/repositories/comments_repository.dart' as _i802;
 import 'domain/usecases/all_comments_usecase.dart' as _i471;
 import 'domain/usecases/create_comment_usecase.dart' as _i648;
 import 'domain/usecases/delete_comment_usecase.dart' as _i223;
@@ -19,15 +22,18 @@ class CommentPackageModule extends _i526.MicroPackageModule {
 // initializes the registration of main-scope dependencies inside of GetIt
   @override
   _i687.FutureOr<void> init(_i526.GetItHelper gh) {
+    gh.lazySingleton<_i844.CommentsApiImpl>(() => _i844.CommentsApiImpl());
+    gh.lazySingleton<_i802.CommentsRepository>(
+        () => _i190.CommentsRepositoryImpl(gh<_i470.CommentsApi>()));
     gh.lazySingleton<_i372.SingleCommentUseCase>(
-        () => _i372.SingleCommentUseCase(gh<_i60.CommentRepository>()));
+        () => _i372.SingleCommentUseCase(gh<_i802.CommentsRepository>()));
     gh.lazySingleton<_i471.AllCommentsUseCase>(
-        () => _i471.AllCommentsUseCase(gh<_i60.CommentRepository>()));
+        () => _i471.AllCommentsUseCase(gh<_i802.CommentsRepository>()));
     gh.lazySingleton<_i223.DeleteCommentUseCase>(
-        () => _i223.DeleteCommentUseCase(gh<_i60.CommentRepository>()));
+        () => _i223.DeleteCommentUseCase(gh<_i802.CommentsRepository>()));
     gh.lazySingleton<_i648.CreateCommentUseCase>(
-        () => _i648.CreateCommentUseCase(gh<_i60.CommentRepository>()));
+        () => _i648.CreateCommentUseCase(gh<_i802.CommentsRepository>()));
     gh.lazySingleton<_i969.UpdateCommentUseCase>(
-        () => _i969.UpdateCommentUseCase(gh<_i60.CommentRepository>()));
+        () => _i969.UpdateCommentUseCase(gh<_i802.CommentsRepository>()));
   }
 }

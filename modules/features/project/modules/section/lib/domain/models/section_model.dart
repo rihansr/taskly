@@ -17,6 +17,15 @@ class SectionModel extends Equatable {
     this.name,
   });
 
+  factory SectionModel.fromJson(Map<String, dynamic> json) =>
+      _$SectionModelFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SectionModelToJson(this);
+
+  static List<SectionModel> fromJsonList(List<dynamic> json) {
+    return json.map((e) => SectionModel.fromJson(e)).toList();
+  }
+
   @override
   bool get stringify => true;
 

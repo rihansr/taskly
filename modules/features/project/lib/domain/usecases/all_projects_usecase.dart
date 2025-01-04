@@ -6,7 +6,7 @@ import '../repositories/project_repository.dart';
 
 @LazySingleton()
 class AllProjectsUseCase {
-  final ProjectRepository repository;
+  final ProjectsRepository repository;
 
   AllProjectsUseCase(this.repository);
 
