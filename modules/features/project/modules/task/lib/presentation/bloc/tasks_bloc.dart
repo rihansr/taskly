@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:core/utils/enums.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
@@ -30,7 +29,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     this._activeTasksUseCase,
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
-      events.mapOrNull(
+      await events.mapOrNull(
         activeTasks: (event) async => await _activeTasks(event, emit),
       );
     });
@@ -46,7 +45,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     this._deleteTaskUseCase,
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
-      events.mapOrNull(
+     await events.mapOrNull(
         sharedLabels: (event) async => await _sharedLabels(event, emit),
         taskDetails: (event) async => await _taskDetails(event, emit),
         addTask: (event) async => await _addTask(event, emit),
@@ -60,7 +59,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   _activeTasks(_ActiveTasks event, Emitter<TasksState> emitter) async {
     emitter(state.copyWith(status: Status.loading));
-    final result = await _activeTasksUseCase.invoke();
+    final result = await _activeTasksUseCase.invoke(
+      {
+        'project_id': event.projectId,
+      },
+    );
     result.fold(
       (failure) => emitter(state.copyWith(
         status: Status.failure,

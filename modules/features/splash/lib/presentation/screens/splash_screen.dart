@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'package:core/configs/app_config.dart';
 import 'package:core/router/routes.dart';
-import 'package:core/utils/debug.dart';
-import 'package:core/utils/encryptor.dart';
 import 'package:shared/data/data_sources/local/shared_prefs.dart';
 import 'package:shared/di/service_locator.dart';
 import 'package:shared/presentation/widgets/widgets.dart';

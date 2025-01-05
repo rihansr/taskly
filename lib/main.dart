@@ -2,7 +2,15 @@ import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/domain/usecases/all_projects_usecase.dart';
+import 'package:project/domain/usecases/create_project_usecase.dart';
+import 'package:project/domain/usecases/delete_project_usecase.dart';
+import 'package:project/domain/usecases/single_project_usecase.dart';
+import 'package:project/domain/usecases/update_project_usecase.dart';
 import 'package:project/presentation/bloc/projects_bloc.dart';
+import 'package:section/domain/usecases/all_sections_usecase.dart';
+import 'package:section/presentation/bloc/sections_bloc.dart';
+import 'package:task/domain/usecases/active_tasks_usecase.dart';
+import 'package:task/presentation/bloc/tasks_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:shared/di/service_locator.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
@@ -31,8 +39,22 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => ProjectsBloc.projects(
-            sl<AllProjectsUseCase>()
+          create: (context) => ProjectsBloc(
+            sl<AllProjectsUseCase>(),
+            sl<CreateProjectUseCase>(),
+            sl<SingleProjectUseCase>(),
+            sl<UpdateProjectUseCase>(),
+            sl<DeleteProjectUseCase>(),
+          ),
+        ),
+        BlocProvider(
+          create: (context) => SectionsBloc.sections(
+            sl<AllSectionsUseCase>()
+          ),
+        ),
+        BlocProvider(
+          create: (context) => TasksBloc.tasks(
+            sl<ActiveTasksUseCase>()
           ),
         ),
       ],

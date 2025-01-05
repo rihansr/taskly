@@ -49,7 +49,6 @@ ThemeData theming(ThemeMode mode) {
       size: 24,
     ),
     appBarTheme: const AppBarTheme().copyWith(
-      toolbarHeight: 88.0,
       color: Colors.transparent,
       shadowColor: colorPalette.shadow,
       foregroundColor: colorPalette.icon,

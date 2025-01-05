@@ -1,3 +1,4 @@
+import 'package:core/utils/enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import '../../domain/models/section_model.dart';

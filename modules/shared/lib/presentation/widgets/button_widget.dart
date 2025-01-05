@@ -5,6 +5,8 @@ import 'package:flutter/services.dart';
 
 class Button<T> extends StatelessWidget {
   final T? shape;
+  final double? width;
+  final double? height;
   final Color? background;
   final Color borderTint;
   final double borderSize;
@@ -31,6 +33,8 @@ class Button<T> extends StatelessWidget {
   const Button({
     super.key,
     this.shape,
+    this.width,
+    this.height,
     this.label,
     this.background,
     this.borderTint = Colors.transparent,
@@ -83,6 +87,8 @@ class Button<T> extends StatelessWidget {
         focusColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: Container(
+          width: width,
+          height: height,
           padding: padding,
           alignment: Alignment.center,
           decoration: shape is ShapeBorder

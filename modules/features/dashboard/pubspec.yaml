@@ -18,6 +18,10 @@ dependencies:
     path: ../../shared
   project:
     path: ../project
+  section:
+    path: ../project/modules/section
+  task:
+    path: ../project/modules/task
   settings:
     path: ../settings
 

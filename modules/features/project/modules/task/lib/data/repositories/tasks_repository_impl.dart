@@ -14,9 +14,9 @@ class TasksRepositoryImpl extends TasksRepository {
   );
 
   @override
-  Future<Either<Failure, List<TaskModel>>> activeTasks() async {
+  Future<Either<Failure, List<TaskModel>>> activeTasks(Map<String, dynamic> queryParams) async {
     try {
-      final result = await tasksApi.getAllActiveTasks();
+      final result = await tasksApi.getAllActiveTasks(queryParams);
       return Right(result);
     } on ServerException catch (e) {
       return Left(ServerFailure(e.message, e.statusCode));

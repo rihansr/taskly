@@ -1,7 +1,5 @@
 part of 'sections_bloc.dart';
 
-enum Status { initial, loading, creating, updating, deleting, success, failure }
-
 @Freezed(copyWith: true, equal: true)
 class SectionsState with _$SectionsState {
   const factory SectionsState({

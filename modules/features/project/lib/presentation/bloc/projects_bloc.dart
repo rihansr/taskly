@@ -1,3 +1,4 @@
+import 'package:core/utils/enums.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import '../../domain/models/project_model.dart';
@@ -17,6 +18,24 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
   late UpdateProjectUseCase _updateProjectUseCase;
   late DeleteProjectUseCase _deleteProjectUseCase;
 
+  ProjectsBloc(
+    this._allProjectsUseCase,
+    this._addProjectUseCase,
+    this._singleProjectUseCase,
+    this._updateProjectUseCase,
+    this._deleteProjectUseCase,
+  ) : super(const _ProjectsState()) {
+    on<ProjectsEvent>((events, emit) async {
+      await events.mapOrNull(
+        allProjects: (event) async => await _allProjects(event, emit),
+        projectDetails: (event) async => await _projectDetails(event, emit),
+        addProject: (event) async => await _addProject(event, emit),
+        updateProject: (event) async => await _updateProject(event, emit),
+        deleteProject: (event) async => await _deleteProject(event, emit),
+      );
+    });
+  }
+
   ProjectsBloc.projects(
     this._allProjectsUseCase,
   ) : super(const ProjectsState()) {
@@ -27,7 +46,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     });
   }
 
-  ProjectsBloc(
+  ProjectsBloc.single(
     this._addProjectUseCase,
     this._singleProjectUseCase,
     this._updateProjectUseCase,
@@ -93,7 +112,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
         state.copyWith(
           status: Status.success,
           project: project,
-          projects: state.projects..add(project),
+          projects: [...state.projects, project],
         ),
       ),
     );

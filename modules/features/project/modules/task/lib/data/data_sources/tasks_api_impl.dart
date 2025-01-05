@@ -11,11 +11,12 @@ class TasksApiImpl extends TasksApi {
   TasksApiImpl();
 
   @override
-  Future<List<TaskModel>> getAllActiveTasks() async {
+  Future<List<TaskModel>> getAllActiveTasks(Map<String, dynamic> queryParams) async {
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: serverEnv.tasks,
       method: Method.get,
+      queryParams: queryParams,
       token: sl<SharedPrefs>().token,
     );
     return TaskModel.fromJsonList(result.data ?? []);

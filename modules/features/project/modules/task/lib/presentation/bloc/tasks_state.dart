@@ -1,7 +1,5 @@
 part of 'tasks_bloc.dart';
 
-enum Status { initial, loading, creating, updating, reopening, closing, deleting, success, failure }
-
 @Freezed(copyWith: true, equal: true)
 class TasksState with _$TasksState {
   const factory TasksState({

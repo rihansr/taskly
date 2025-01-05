@@ -10,8 +10,8 @@ class ActiveTasksUseCase {
 
   ActiveTasksUseCase(this.repository);
 
-  Future<Either<Failure, List<TaskModel>>> invoke() async {
-    final result = await repository.activeTasks();
+  Future<Either<Failure, List<TaskModel>>> invoke(Map<String, dynamic> queryParams) async {
+    final result = await repository.activeTasks(queryParams);
     return result.fold((l) {
       return Left(l);
     }, (r) async {

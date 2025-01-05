@@ -3,7 +3,8 @@ import 'package:shared/data/data_sources/remote/error/failures.dart';
 import '../models/task_model.dart';
 
 abstract class TasksRepository {
-  Future<Either<Failure, List<TaskModel>>> activeTasks();
+  Future<Either<Failure, List<TaskModel>>> activeTasks(
+      Map<String, dynamic> queryParams);
   Future<Either<Failure, List<String>>> sharedLabels();
   Future<Either<Failure, TaskModel>> singleTask(String id);
   Future<Either<Failure, TaskModel>> createTask(Map<String, dynamic> data);
