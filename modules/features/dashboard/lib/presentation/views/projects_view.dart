@@ -1,8 +1,10 @@
 import 'package:core/styles/dimen.dart';
+import 'package:core/styles/style.dart';
 import 'package:core/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:project/domain/models/project_model.dart';
 import 'package:project/presentation/bloc/projects_bloc.dart';
+import 'package:project/presentation/views/add_project_view.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
@@ -141,6 +143,30 @@ class ProjectsViewState extends State<ProjectsView>
                             context
                                 .read<TasksBloc>()
                                 .add(TasksEvent.activeTasks(projectId: by));
+                          },
+                          onEdit: () => showModalBottomSheet(
+                            context: context,
+                            enableDrag: true,
+                            showDragHandle: true,
+                            shape: style.defaultBottomSheetShape,
+                            builder: (_) => AddProjectView(project: project),
+                          ).then(
+                            (project) {
+                              if (project != null) {
+                                context.read<ProjectsBloc>().add(
+                                      ProjectsEvent.updateProject(
+                                        project: project as ProjectModel,
+                                      ),
+                                    );
+                              }
+                            },
+                          ),
+                          onDelete: () {
+                            context.read<ProjectsBloc>().add(
+                                  ProjectsEvent.deleteProject(
+                                    id: project.id ?? '',
+                                  ),
+                                );
                           },
                           isSelected: currentProject == project,
                           title: project.name ?? 'Unknown',

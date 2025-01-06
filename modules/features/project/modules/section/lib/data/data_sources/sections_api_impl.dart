@@ -51,7 +51,7 @@ class SectionsApiImpl extends SectionsApi {
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: "${serverEnv.sections}/${section.id ?? "0"}",
-      method: Method.put,
+      method: Method.post,
       token: sl<SharedPrefs>().token,
       body: section.toJson(),
     );

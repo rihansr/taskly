@@ -1,13 +1,11 @@
 import 'package:core/styles/dimen.dart';
+import 'package:core/styles/style.dart';
 import 'package:core/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project/domain/usecases/create_project_usecase.dart';
-import 'package:project/domain/usecases/delete_project_usecase.dart';
-import 'package:project/domain/usecases/single_project_usecase.dart';
-import 'package:project/domain/usecases/update_project_usecase.dart';
+import 'package:project/domain/models/project_model.dart';
 import 'package:project/presentation/bloc/projects_bloc.dart';
-import 'package:shared/di/service_locator.dart';
+import 'package:project/presentation/views/add_project_view.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 
 class AddProjectButton extends StatefulWidget {
@@ -43,18 +41,24 @@ class _AddProjectButtonState extends State<AddProjectButton> {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: ElevatedButton(
-            onPressed: () {
-              context
-                  .read<ProjectsBloc>()
-                  .add(const ProjectsEvent.addProject(name: 'Test Project'));
-            },
+            onPressed: () => showModalBottomSheet(
+              context: context,
+              enableDrag: true,
+              showDragHandle: true,
+              shape: style.defaultBottomSheetShape,
+              builder: (_) => const AddProjectView(),
+            ).then(
+              (project) {
+                if (project != null) {
+                  context.read<ProjectsBloc>().add(
+                        ProjectsEvent.addProject(
+                          name: (project as ProjectModel?)?.name ?? '',
+                        ),
+                      );
+                }
+              },
+            ),
             style: ElevatedButton.styleFrom(
-              backgroundColor: theme.colorScheme.primary,
-              foregroundColor: theme.colorScheme.onPrimary,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              textStyle: theme.textTheme.titleMedium,
               padding: const EdgeInsets.symmetric(vertical: 12),
             ),
             child: state.status == Status.creating

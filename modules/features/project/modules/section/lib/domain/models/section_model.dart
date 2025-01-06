@@ -17,6 +17,20 @@ class SectionModel extends Equatable {
     this.name,
   });
 
+  SectionModel copyWith({
+    String? id,
+    String? projectId,
+    int? order,
+    String? name,
+  }) {
+    return SectionModel(
+      id: id ?? this.id,
+      projectId: projectId ?? this.projectId,
+      order: order ?? this.order,
+      name: name ?? this.name,
+    );
+  }
+
   factory SectionModel.fromJson(Map<String, dynamic> json) =>
       _$SectionModelFromJson(json);
 

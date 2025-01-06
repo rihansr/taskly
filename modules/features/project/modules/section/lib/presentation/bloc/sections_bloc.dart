@@ -18,6 +18,24 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
   late UpdateSectionUseCase _updateSectionUseCase;
   late DeleteSectionUseCase _deleteSectionUseCase;
 
+  SectionsBloc(
+    this._allSectionsUseCase,
+    this._addSectionUseCase,
+    this._singleSectionUseCase,
+    this._updateSectionUseCase,
+    this._deleteSectionUseCase,
+  ) : super(const _SectionsState()) {
+    on<SectionsEvent>((events, emit) async {
+      await events.mapOrNull(
+        allSections: (event) async => await _allSections(event, emit),
+        sectionDetails: (event) async => await _sectionDetails(event, emit),
+        addSection: (event) async => await _addSection(event, emit),
+        updateSection: (event) async => await _updateSection(event, emit),
+        deleteSection: (event) async => await _deleteSection(event, emit),
+      );
+    });
+  }
+
   SectionsBloc.sections(
     this._allSectionsUseCase,
   ) : super(const SectionsState()) {
@@ -28,7 +46,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
     });
   }
 
-  SectionsBloc(
+  SectionsBloc.single(
     this._addSectionUseCase,
     this._singleSectionUseCase,
     this._updateSectionUseCase,

@@ -169,6 +169,52 @@ ThemeData theming(ThemeMode mode) {
       elevation: 2,
       actionTextColor: colorPalette.paragraph,
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        backgroundColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.disabled)) {
+              return colorPalette.disable;
+            }
+            return colorPalette.primary;
+          },
+        ),
+        foregroundColor: WidgetStateProperty.resolveWith<Color>(
+          (Set<WidgetState> states) {
+            if (states.contains(WidgetState.disabled)) {
+              return colorPalette.disable;
+            }
+            return colorPalette.onPrimary;
+          },
+        ),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        textStyle: WidgetStateProperty.all(
+          TextStyle(
+            fontSize: 16,
+            height: 1.5,
+            color: colorPalette.onPrimary,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+    ),
+    popupMenuTheme: const PopupMenuThemeData().copyWith(
+      color: colorPalette.scaffold,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      iconSize: 18,
+      textStyle: TextStyle(
+        fontSize: 14,
+        height: 1.43,
+        color: colorPalette.paragraph,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData().copyWith(
       type: BottomNavigationBarType.fixed,
       backgroundColor: Colors.transparent,

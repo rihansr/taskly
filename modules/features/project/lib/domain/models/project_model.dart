@@ -39,6 +39,36 @@ class ProjectModel extends Equatable {
     this.url,
   });
 
+  ProjectModel copyWith({
+    String? id,
+    String? name,
+    int? commentCount,
+    int? order,
+    String? color,
+    bool? isShared,
+    bool? isFavorite,
+    String? parentId,
+    bool? isInboxProject,
+    bool? isTeamInbox,
+    String? viewStyle,
+    String? url,
+  }) {
+    return ProjectModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      commentCount: commentCount ?? this.commentCount,
+      order: order ?? this.order,
+      color: color ?? this.color,
+      isShared: isShared ?? this.isShared,
+      isFavorite: isFavorite ?? this.isFavorite,
+      parentId: parentId ?? this.parentId,
+      isInboxProject: isInboxProject ?? this.isInboxProject,
+      isTeamInbox: isTeamInbox ?? this.isTeamInbox,
+      viewStyle: viewStyle ?? this.viewStyle,
+      url: url ?? this.url,
+    );
+  }
+
   factory ProjectModel.fromJson(Map<String, dynamic> json) =>
       _$ProjectModelFromJson(json);
 

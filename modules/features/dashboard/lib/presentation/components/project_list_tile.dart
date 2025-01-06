@@ -1,12 +1,17 @@
 import 'package:core/styles/dimen.dart';
+import 'package:core/styles/strings.dart';
 import 'package:core/utils/extensions/string_extensions.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/presentation/widgets/widgets.dart';
 
 class CollapsingListTile extends StatefulWidget {
   final String title;
   final AnimationController animationController;
   final bool isSelected;
   final Function()? onTap;
+  final Function()? onEdit;
+  final Function()? onDelete;
 
   const CollapsingListTile({
     super.key,
@@ -14,6 +19,8 @@ class CollapsingListTile extends StatefulWidget {
     required this.animationController,
     this.isSelected = false,
     this.onTap,
+    this.onEdit,
+    this.onDelete,
   });
 
   @override
@@ -61,8 +68,38 @@ class _CollapsingListTileState extends State<CollapsingListTile> {
             ),
             SizedBox(width: sizedBoxAnimation.value),
             (widthAnimation.value >= dimen.width * .5)
-                ? Text(widget.title)
-                : Container()
+                ? Expanded(
+                    child: Text(
+                      widget.title,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+                : Container(),
+            if (widthAnimation.value >= dimen.width * .5)
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    string.of(context).edit,
+                    string.of(context).delete,
+                  ].mapIndexed((i, e) {
+                    return PopupMenuItem(
+                      value: i,
+                      child: Text(e),
+                    );
+                  }).toList();
+                },
+                child: const Icon(CupertinoIcons.ellipsis_vertical),
+                onSelected: (i) {
+                  switch (i) {
+                    case 0:
+                      widget.onEdit?.call();
+                      break;
+                    case 1:
+                      widget.onDelete?.call();
+                      break;
+                  }
+                },
+              ),
           ],
         ),
       ),

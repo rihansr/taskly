@@ -9,3 +9,4 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:lottie/lottie.dart';
 export 'package:equatable/equatable.dart';
 export 'package:iconsax/iconsax.dart';
+export 'package:collection/collection.dart';

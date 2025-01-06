@@ -21,6 +21,21 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
+  String get update => 'Actualizar';
+
+  @override
+  String get delete => 'Borrar';
+
+  @override
+  String get add => 'Añadir';
+
+  @override
+  String get save => 'Guardar';
+
+  @override
+  String get edit => 'Editar';
+
+  @override
   String get settings => 'Ajustes';
 
   @override

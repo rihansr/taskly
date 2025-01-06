@@ -8,6 +8,10 @@ import 'package:project/domain/usecases/single_project_usecase.dart';
 import 'package:project/domain/usecases/update_project_usecase.dart';
 import 'package:project/presentation/bloc/projects_bloc.dart';
 import 'package:section/domain/usecases/all_sections_usecase.dart';
+import 'package:section/domain/usecases/create_section_usecase.dart';
+import 'package:section/domain/usecases/delete_section_usecase.dart';
+import 'package:section/domain/usecases/single_section_usecase.dart';
+import 'package:section/domain/usecases/update_section_usecase.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:task/domain/usecases/active_tasks_usecase.dart';
 import 'package:task/presentation/bloc/tasks_bloc.dart';
@@ -48,8 +52,12 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => SectionsBloc.sections(
-            sl<AllSectionsUseCase>()
+          create: (context) => SectionsBloc(
+            sl<AllSectionsUseCase>(),
+            sl<CreateSectionUseCase>(),
+            sl<SingleSectionUseCase>(),
+            sl<UpdateSectionUseCase>(),
+            sl<DeleteSectionUseCase>(),
           ),
         ),
         BlocProvider(

@@ -49,7 +49,7 @@ class ProjectsApiImpl extends ProjectsApi {
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: "${serverEnv.projects}/${project.id ?? "0"}",
-      method: Method.put,
+      method: Method.post,
       token: sl<SharedPrefs>().token,
       body: project.toJson(),
     );

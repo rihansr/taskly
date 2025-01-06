@@ -13,6 +13,11 @@ class _Style {
   _Style._();
 
   final defaultBlur = ImageFilter.blur(sigmaX: 4, sigmaY: 4);
+  final defaultBottomSheetShape = const RoundedRectangleBorder(
+    borderRadius: BorderRadius.vertical(
+      top: Radius.circular(16),
+    ),
+  );
 
   BoxDecoration defaultDecoration(BuildContext context) => BoxDecoration(
         shape: BoxShape.rectangle,
@@ -55,7 +60,9 @@ class _Style {
         ),
         action: (onAction != null)
             ? SnackBarAction(
-                label: actionLabel ?? type?.actionLabel ?? string.of(navigator.context).okay,
+                label: actionLabel ??
+                    type?.actionLabel ??
+                    string.of(navigator.context).okay,
                 textColor: type?.textColor,
                 onPressed: onAction,
               )
