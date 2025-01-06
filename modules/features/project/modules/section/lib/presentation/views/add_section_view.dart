@@ -39,6 +39,7 @@ class _AddSectionViewState extends State<AddSectionView> {
     if (_formKey.currentState!.validate()) {
       Navigator.of(context).pop(
         _section.copyWith(
+          projectId: widget.projectID,
           name: _nameController.text,
         ),
       );
@@ -78,7 +79,7 @@ class _AddSectionViewState extends State<AddSectionView> {
               ),
               onPressed: () => _proceed(),
               child: Text(
-                widget._onEditMode ? 'Edit Project' : 'Add Project',
+                widget._onEditMode ? 'Edit Section' : 'Add Section',
               ),
             ),
           ],

@@ -1,4 +1,5 @@
 import 'package:core/core.dart';
+import 'package:dashboard/presentation/bloc/dashboard_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project/domain/usecases/all_projects_usecase.dart';
@@ -42,6 +43,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => DashboardBloc(),
+        ),
         BlocProvider(
           create: (context) => ProjectsBloc(
             sl<AllProjectsUseCase>(),

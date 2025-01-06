@@ -26,7 +26,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
     this._deleteSectionUseCase,
   ) : super(const _SectionsState()) {
     on<SectionsEvent>((events, emit) async {
-      await events.mapOrNull(
+      await events.map(
         allSections: (event) async => await _allSections(event, emit),
         sectionDetails: (event) async => await _sectionDetails(event, emit),
         addSection: (event) async => await _addSection(event, emit),
@@ -104,6 +104,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
     emitter(state.copyWith(status: Status.creating));
     final result = await _addSectionUseCase.invoke(
       {
+        'project_id': event.projectId,
         'name': event.name,
       },
     );
@@ -116,7 +117,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
         state.copyWith(
           status: Status.success,
           section: section,
-          sections: state.sections..add(section),
+          sections: [...state.sections, section],
         ),
       ),
     );

@@ -88,7 +88,10 @@ class _CollapsingListTileState extends State<CollapsingListTile> {
                     );
                   }).toList();
                 },
-                child: const Icon(CupertinoIcons.ellipsis_vertical),
+                child: const Icon(
+                  CupertinoIcons.ellipsis_vertical,
+                  size: 18,
+                ),
                 onSelected: (i) {
                   switch (i) {
                     case 0:

@@ -27,6 +27,16 @@ class _AddProjectViewState extends State<AddProjectView> {
     super.initState();
   }
 
+  _proceed() {
+    if (_formKey.currentState!.validate()) {
+      Navigator.of(context).pop(
+        _project.copyWith(
+          name: _nameController.text,
+        ),
+      );
+    }
+  }
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -52,15 +62,7 @@ class _AddProjectViewState extends State<AddProjectView> {
               controller: _nameController,
               autoValidate: true,
               textCapitalization: TextCapitalization.words,
-              onFieldSubmitted: (_) {
-                if (_formKey.currentState!.validate()) {
-                  Navigator.of(context).pop(
-                    _project.copyWith(
-                      name: _nameController.text,
-                    ),
-                  );
-                }
-              },
+              onFieldSubmitted: (_) => _proceed(),
               validator: (value) => validator.validateField(
                 value,
                 field: 'Name',
@@ -72,15 +74,7 @@ class _AddProjectViewState extends State<AddProjectView> {
               style: ElevatedButton.styleFrom(
                 padding: const EdgeInsets.all(12),
               ),
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  Navigator.of(context).pop(
-                    _project.copyWith(
-                      name: _nameController.text,
-                    ),
-                  );
-                }
-              },
+              onPressed: () => _proceed(),
               child: Text(
                 widget._onEditMode ? 'Edit Project' : 'Add Project',
               ),

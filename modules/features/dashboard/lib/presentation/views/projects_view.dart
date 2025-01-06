@@ -8,7 +8,7 @@ import 'package:project/presentation/views/add_project_view.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
-import 'package:task/presentation/bloc/tasks_bloc.dart';
+import '../bloc/dashboard_bloc.dart';
 import '../components/add_project_button.dart';
 import '../components/project_list_tile.dart';
 
@@ -27,7 +27,6 @@ class ProjectsViewState extends State<ProjectsView>
   bool isCollapsed = false;
   late AnimationController _animationController;
   late Animation<double> widthAnimation;
-  ProjectModel? currentProject;
 
   @override
   void initState() {
@@ -89,20 +88,25 @@ class ProjectsViewState extends State<ProjectsView>
               child: BlocConsumer<ProjectsBloc, ProjectsState>(
                 bloc: context.watch<ProjectsBloc>(),
                 listener: (context, state) {
+                  final dashboard = context.read<DashboardBloc>();
+                  final currentProject = dashboard.state.currentProject;
                   if (state.status == Status.success) {
                     if (state.projects.isNotEmpty) {
-                      if (currentProject == null) {
-                        setState(() {
-                          currentProject = state.projects.firstOrNull;
-                        });
+                      if (currentProject == null ||
+                          !state.projects.contains(currentProject)) {
+                        dashboard.add(
+                          DashboardEvent.assignProject(state.projects.first),
+                        );
                       }
+
                       String by = currentProject?.id ?? '';
                       context
                           .read<SectionsBloc>()
                           .add(SectionsEvent.allSections(projectId: by));
-                      context
-                          .read<TasksBloc>()
-                          .add(TasksEvent.activeTasks(projectId: by));
+                    } else {
+                      dashboard.add(
+                        const DashboardEvent.assignProject(null),
+                      );
                     }
                   }
                 },
@@ -113,7 +117,7 @@ class ProjectsViewState extends State<ProjectsView>
                       enabled: true,
                       child: ListView.separated(
                         shrinkWrap: true,
-                        padding: const EdgeInsets.all(0),
+                        padding: const EdgeInsets.only(bottom: 24),
                         separatorBuilder: (context, counter) {
                           return const Divider();
                         },
@@ -126,7 +130,7 @@ class ProjectsViewState extends State<ProjectsView>
                     );
                   } else {
                     return ListView.separated(
-                      padding: const EdgeInsets.all(0),
+                      padding: const EdgeInsets.only(bottom: 24),
                       shrinkWrap: true,
                       separatorBuilder: (context, counter) {
                         return const Divider();
@@ -135,14 +139,15 @@ class ProjectsViewState extends State<ProjectsView>
                         final project = state.projects[counter];
                         return CollapsingListTile(
                           onTap: () {
-                            setState(() => currentProject = project);
+                            final dashboard = context.read<DashboardBloc>();
+                            dashboard.add(
+                              DashboardEvent.assignProject(project),
+                            );
+                            final currentProject = dashboard.state.currentProject;
                             String by = currentProject?.id ?? '';
                             context
                                 .read<SectionsBloc>()
                                 .add(SectionsEvent.allSections(projectId: by));
-                            context
-                                .read<TasksBloc>()
-                                .add(TasksEvent.activeTasks(projectId: by));
                           },
                           onEdit: () => showModalBottomSheet(
                             context: context,
@@ -168,7 +173,12 @@ class ProjectsViewState extends State<ProjectsView>
                                   ),
                                 );
                           },
-                          isSelected: currentProject == project,
+                          isSelected: context
+                                  .watch<DashboardBloc>()
+                                  .state
+                                  .currentProject
+                                  ?.id ==
+                              project.id,
                           title: project.name ?? 'Unknown',
                           animationController: _animationController,
                         );
@@ -179,7 +189,6 @@ class ProjectsViewState extends State<ProjectsView>
                 },
               ),
             ),
-            const SizedBox(height: 24),
             AddProjectButton(
               animationController: _animationController,
             ),

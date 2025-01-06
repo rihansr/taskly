@@ -26,7 +26,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     this._deleteProjectUseCase,
   ) : super(const _ProjectsState()) {
     on<ProjectsEvent>((events, emit) async {
-      await events.mapOrNull(
+      await events.map(
         allProjects: (event) async => await _allProjects(event, emit),
         projectDetails: (event) async => await _projectDetails(event, emit),
         addProject: (event) async => await _addProject(event, emit),
