@@ -202,6 +202,17 @@ ThemeData theming(ThemeMode mode) {
         ),
       ),
     ),
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+      backgroundColor: colorPalette.primary,
+      foregroundColor: colorPalette.onPrimary,
+      elevation: 2,
+      focusElevation: 2,
+      hoverElevation: 2,
+      highlightElevation: 2,
+      iconSize: 18,
+      
+      shape: const StadiumBorder(),
+    ),
     popupMenuTheme: const PopupMenuThemeData().copyWith(
       color: colorPalette.scaffold,
       shape: RoundedRectangleBorder(

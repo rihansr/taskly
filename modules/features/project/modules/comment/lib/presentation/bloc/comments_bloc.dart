@@ -18,17 +18,37 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
   late UpdateCommentUseCase _updateCommentUseCase;
   late DeleteCommentUseCase _deleteCommentUseCase;
 
-  CommentsBloc.comments(
+  CommentsBloc(
     this._allCommentsUseCase,
-  ) : super(const CommentsState()) {
+    this._addCommentUseCase,
+    this._singleCommentUseCase,
+    this._updateCommentUseCase,
+    this._deleteCommentUseCase,
+  ) : super(const _CommentsState()) {
     on<CommentsEvent>((events, emit) async {
-      await events.mapOrNull(
+      await events.map(
         allComments: (event) async => await _allComments(event, emit),
+        singleComment: (event) async => await _singleComment(event, emit),
+        addComment: (event) async => await _addComment(event, emit),
+        updateComment: (event) async => await _updateComment(event, emit),
+        deleteComment: (event) async => await _deleteComment(event, emit),
+        reset: (event) async => emit(const _CommentsState()),
       );
     });
   }
 
-  CommentsBloc(
+  CommentsBloc.comments(
+    this._allCommentsUseCase,
+  ) : super(const _CommentsState()) {
+    on<CommentsEvent>((events, emit) async {
+      await events.mapOrNull(
+        allComments: (event) async => await _allComments(event, emit),
+        reset: (event) async => emit(const _CommentsState()),
+      );
+    });
+  }
+
+  CommentsBloc.single(
     this._addCommentUseCase,
     this._singleCommentUseCase,
     this._updateCommentUseCase,
@@ -40,6 +60,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         addComment: (event) async => await _addComment(event, emit),
         updateComment: (event) async => await _updateComment(event, emit),
         deleteComment: (event) async => await _deleteComment(event, emit),
+        reset: (event) async => emit(const _CommentsState()),
       );
     });
   }

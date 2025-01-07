@@ -29,4 +29,5 @@ class TasksEvent with _$TasksEvent {
   const factory TasksEvent.deleteTask({
     required String id,
   }) = _DeleteTask;
+  const factory TasksEvent.reset() = _Reset;
 }

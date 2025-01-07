@@ -28,7 +28,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           builder: (context, state) {
             return const Stack(
               children: [
-                SectionsView(),
+                Padding(
+                  padding: EdgeInsets.only(left: 60),
+                  child: SectionsView(),
+                ),
                 ProjectsView(),
               ],
             );

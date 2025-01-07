@@ -32,6 +32,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
         addProject: (event) async => await _addProject(event, emit),
         updateProject: (event) async => await _updateProject(event, emit),
         deleteProject: (event) async => await _deleteProject(event, emit),
+        reset: (event) async => emit(const _ProjectsState()),
       );
     });
   }
@@ -42,6 +43,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
     on<ProjectsEvent>((events, emit) async {
       await events.mapOrNull(
         allProjects: (event) async => await _allProjects(event, emit),
+        reset: (event) async => emit(const ProjectsState()),
       );
     });
   }
@@ -58,6 +60,7 @@ class ProjectsBloc extends Bloc<ProjectsEvent, ProjectsState> {
         addProject: (event) async => await _addProject(event, emit),
         updateProject: (event) async => await _updateProject(event, emit),
         deleteProject: (event) async => await _deleteProject(event, emit),
+        reset: (event) async => emit(const _ProjectsState()),
       );
     });
   }

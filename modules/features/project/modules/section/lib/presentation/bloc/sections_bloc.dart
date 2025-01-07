@@ -32,6 +32,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
         addSection: (event) async => await _addSection(event, emit),
         updateSection: (event) async => await _updateSection(event, emit),
         deleteSection: (event) async => await _deleteSection(event, emit),
+        reset: (event) async => emit(const _SectionsState()),
       );
     });
   }
@@ -42,6 +43,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
     on<SectionsEvent>((events, emit) async {
       await events.mapOrNull(
         allSections: (event) async => await _allSections(event, emit),
+        reset: (event) async => emit(const _SectionsState()),
       );
     });
   }
@@ -58,6 +60,7 @@ class SectionsBloc extends Bloc<SectionsEvent, SectionsState> {
         addSection: (event) async => await _addSection(event, emit),
         updateSection: (event) async => await _updateSection(event, emit),
         deleteSection: (event) async => await _deleteSection(event, emit),
+        reset: (event) async => emit(const _SectionsState()),
       );
     });
   }

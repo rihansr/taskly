@@ -25,17 +25,45 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   late ReopenTaskUseCase _reopenTaskUseCase;
   late DeleteTaskUseCase _deleteTaskUseCase;
 
-  TasksBloc.tasks(
+  TasksBloc(
     this._activeTasksUseCase,
+    this._sharedLabelsUseCase,
+    this._singleTaskUseCase,
+    this._addTaskUseCase,
+    this._updateTaskUseCase,
+    this._closeTaskUseCase,
+    this._reopenTaskUseCase,
+    this._deleteTaskUseCase,
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
-      await events.mapOrNull(
+     await events.map(
         activeTasks: (event) async => await _activeTasks(event, emit),
+        sharedLabels: (event) async => await _sharedLabels(event, emit),
+        taskDetails: (event) async => await _taskDetails(event, emit),
+        addTask: (event) async => await _addTask(event, emit),
+        updateTask: (event) async => await _updateTask(event, emit),
+        closeTask: (event) async => await _closeTask(event, emit),
+        reopenTask: (event) async => await _reopenTask(event, emit),
+        deleteTask: (event) async => await _deleteTask(event, emit),
+        reset: (event) async => emit(const TasksState()),
       );
     });
   }
 
-  TasksBloc(
+  TasksBloc.tasks(
+    this._activeTasksUseCase,
+    this._addTaskUseCase,
+  ) : super(const TasksState()) {
+    on<TasksEvent>((events, emit) async {
+      await events.mapOrNull(
+        activeTasks: (event) async => await _activeTasks(event, emit),
+        addTask: (event) async => await _addTask(event, emit),
+        reset: (event) async => emit(const TasksState()),
+      );
+    });
+  }
+
+  TasksBloc.single(
     this._sharedLabelsUseCase,
     this._singleTaskUseCase,
     this._addTaskUseCase,
@@ -53,6 +81,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         closeTask: (event) async => await _closeTask(event, emit),
         reopenTask: (event) async => await _reopenTask(event, emit),
         deleteTask: (event) async => await _deleteTask(event, emit),
+        reset: (event) async => emit(const TasksState()),
       );
     });
   }

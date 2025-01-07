@@ -13,6 +13,7 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
       events.map(
         assignProject: (event) => _allProjects(event, emit),
         addSectionTasks: (event) => _addSectionTasks(event, emit),
+        reset: (event) => emit(const _DashboardState()),
       );
     });
   }

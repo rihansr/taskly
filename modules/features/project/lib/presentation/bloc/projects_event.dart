@@ -15,4 +15,5 @@ class ProjectsEvent with _$ProjectsEvent {
   const factory ProjectsEvent.deleteProject({
     required String id,
   }) = _DeleteProject;
+  const factory ProjectsEvent.reset() = _Reset;
 }

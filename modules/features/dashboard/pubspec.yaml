@@ -15,7 +15,7 @@ dependencies:
   freezed: ^2.5.7
   freezed_annotation: ^2.4.4
 
-  kanban_board: any
+  flutter_boardview_kanban: ^1.0.1
   
   # Modules
   core:

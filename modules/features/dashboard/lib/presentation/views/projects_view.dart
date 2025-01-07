@@ -8,6 +8,7 @@ import 'package:project/presentation/views/add_project_view.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
+import 'package:task/presentation/bloc/tasks_bloc.dart';
 import '../bloc/dashboard_bloc.dart';
 import '../components/add_project_button.dart';
 import '../components/project_list_tile.dart';
@@ -27,6 +28,28 @@ class ProjectsViewState extends State<ProjectsView>
   bool isCollapsed = false;
   late AnimationController _animationController;
   late Animation<double> widthAnimation;
+
+  fetchAllSections(BuildContext context, ProjectsState state,
+      [ProjectModel? project]) {
+    final dashboard = context.read<DashboardBloc>();
+    var tasks = dashboard.state.sectionTasks;
+    var currentProject =
+        project ?? dashboard.state.currentProject ?? state.projects.firstOrNull;
+
+    if (state.projects.isEmpty) {
+      if (currentProject != null) dashboard.add(const DashboardEvent.reset());
+      if (tasks.isNotEmpty) {
+        context.read<SectionsBloc>().add(const SectionsEvent.reset());
+        context.read<TasksBloc>().add(const TasksEvent.reset());
+      }
+    } else {
+      dashboard.add(DashboardEvent.assignProject(currentProject));
+      if (currentProject?.id == null) return;
+      context
+          .read<SectionsBloc>()
+          .add(SectionsEvent.allSections(projectId: currentProject!.id!));
+    }
+  }
 
   @override
   void initState() {
@@ -88,27 +111,8 @@ class ProjectsViewState extends State<ProjectsView>
               child: BlocConsumer<ProjectsBloc, ProjectsState>(
                 bloc: context.watch<ProjectsBloc>(),
                 listener: (context, state) {
-                  final dashboard = context.read<DashboardBloc>();
-                  final currentProject = dashboard.state.currentProject;
-                  if (state.status == Status.success) {
-                    if (state.projects.isNotEmpty) {
-                      if (currentProject == null ||
-                          !state.projects.contains(currentProject)) {
-                        dashboard.add(
-                          DashboardEvent.assignProject(state.projects.first),
-                        );
-                      }
-
-                      String by = currentProject?.id ?? '';
-                      context
-                          .read<SectionsBloc>()
-                          .add(SectionsEvent.allSections(projectId: by));
-                    } else {
-                      dashboard.add(
-                        const DashboardEvent.assignProject(null),
-                      );
-                    }
-                  }
+                  if (state.status != Status.success) return;
+                  fetchAllSections(context, state);
                 },
                 builder: (context, state) {
                   if (state.projects.isEmpty &&
@@ -138,17 +142,8 @@ class ProjectsViewState extends State<ProjectsView>
                       itemBuilder: (context, counter) {
                         final project = state.projects[counter];
                         return CollapsingListTile(
-                          onTap: () {
-                            final dashboard = context.read<DashboardBloc>();
-                            dashboard.add(
-                              DashboardEvent.assignProject(project),
-                            );
-                            final currentProject = dashboard.state.currentProject;
-                            String by = currentProject?.id ?? '';
-                            context
-                                .read<SectionsBloc>()
-                                .add(SectionsEvent.allSections(projectId: by));
-                          },
+                          onTap: () =>
+                              fetchAllSections(context, state, project),
                           onEdit: () => showModalBottomSheet(
                             context: context,
                             enableDrag: true,

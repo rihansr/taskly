@@ -6,6 +6,8 @@ export 'enums.dart';
 export 'extensions/extensions.dart';
 export 'validator.dart';
 export 'package:dartz/dartz.dart';
+export 'package:collection/collection.dart';
+export 'package:intl/intl.dart';
 
 final utils = _Utils.instance;
 

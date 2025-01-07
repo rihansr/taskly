@@ -8,4 +8,6 @@ class DashboardEvent with _$DashboardEvent {
     @Default(<SectionModel>[]) List<SectionModel> sections,
     @Default(<TaskModel>[]) List<TaskModel> tasks,
   }) = _AddSectionTasks;
+
+  const factory DashboardEvent.reset() = _Reset;
 }

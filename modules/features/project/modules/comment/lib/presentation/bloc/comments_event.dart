@@ -18,4 +18,5 @@ class CommentsEvent with _$CommentsEvent {
   const factory CommentsEvent.deleteComment({
     required String id,
   }) = _DeleteComment;
+  const factory CommentsEvent.reset() = _Reset;
 }

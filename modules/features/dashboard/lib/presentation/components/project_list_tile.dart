@@ -1,9 +1,9 @@
 import 'package:core/styles/dimen.dart';
 import 'package:core/styles/strings.dart';
 import 'package:core/utils/extensions/string_extensions.dart';
+import 'package:core/utils/utils.dart' as utils;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/presentation/widgets/widgets.dart';
 
 class CollapsingListTile extends StatefulWidget {
   final String title;

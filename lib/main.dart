@@ -15,6 +15,7 @@ import 'package:section/domain/usecases/single_section_usecase.dart';
 import 'package:section/domain/usecases/update_section_usecase.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:task/domain/usecases/active_tasks_usecase.dart';
+import 'package:task/domain/usecases/create_task_usecase.dart';
 import 'package:task/presentation/bloc/tasks_bloc.dart';
 import 'package:settings/settings.dart';
 import 'package:shared/di/service_locator.dart';
@@ -66,7 +67,8 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => TasksBloc.tasks(
-            sl<ActiveTasksUseCase>()
+            sl<ActiveTasksUseCase>(),
+            sl<CreateTaskUseCase>(),
           ),
         ),
       ],

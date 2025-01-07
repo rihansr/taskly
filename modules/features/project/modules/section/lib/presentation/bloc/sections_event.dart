@@ -18,4 +18,5 @@ class SectionsEvent with _$SectionsEvent {
   const factory SectionsEvent.deleteSection({
     required String id,
   }) = _DeleteSection;
+  const factory SectionsEvent.reset() = _Reset;
 }
