@@ -86,7 +86,7 @@ class TaskModel extends Equatable {
       description: description ?? this.description,
       due: due ?? this.due,
       duration: duration ?? this.duration,
-      id: id ?? this.id,
+      id: id,
       labels: labels ?? this.labels,
       order: order ?? this.order,
       priority: priority ?? this.priority,

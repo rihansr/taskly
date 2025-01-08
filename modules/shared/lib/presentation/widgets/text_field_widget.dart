@@ -38,7 +38,7 @@ class TextFieldWidget extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.textCapitalization = TextCapitalization.none,
     this.maxCharacters,
-    this.borderRadius = 4,
+    this.borderRadius = 8,
     this.textInputAction,
     this.titleSpacing = 8,
   });

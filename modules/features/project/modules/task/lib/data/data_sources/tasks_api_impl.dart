@@ -1,4 +1,5 @@
 import 'package:core/configs/configs.dart';
+import 'package:core/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/data/data_sources/local/shared_prefs.dart';
 import 'package:shared/data/data_sources/remote/network.dart';
@@ -11,7 +12,8 @@ class TasksApiImpl extends TasksApi {
   TasksApiImpl();
 
   @override
-  Future<List<TaskModel>> getAllActiveTasks(Map<String, dynamic> queryParams) async {
+  Future<List<TaskModel>> getAllActiveTasks(
+      Map<String, dynamic> queryParams) async {
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: serverEnv.tasks,
@@ -58,6 +60,10 @@ class TasksApiImpl extends TasksApi {
 
   @override
   Future<TaskModel> updateTask(TaskModel task) async {
+    debug.print(
+      task.toJson(),
+      tag: 'HELL',
+    );
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: "${serverEnv.tasks}/${task.id ?? "0"}",

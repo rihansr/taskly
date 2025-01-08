@@ -19,11 +19,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   late ActiveTasksUseCase _activeTasksUseCase;
   late SharedLabelsUseCase _sharedLabelsUseCase;
   late SingleTaskUseCase _singleTaskUseCase;
-  late CreateTaskUseCase _addTaskUseCase;
-  late UpdateTaskUseCase _updateTaskUseCase;
+  late final CreateTaskUseCase _addTaskUseCase;
+  late final UpdateTaskUseCase _updateTaskUseCase;
   late CloseTaskUseCase _closeTaskUseCase;
   late ReopenTaskUseCase _reopenTaskUseCase;
-  late DeleteTaskUseCase _deleteTaskUseCase;
+  late final DeleteTaskUseCase _deleteTaskUseCase;
 
   TasksBloc(
     this._activeTasksUseCase,
@@ -36,7 +36,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     this._deleteTaskUseCase,
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
-     await events.map(
+      await events.map(
         activeTasks: (event) async => await _activeTasks(event, emit),
         sharedLabels: (event) async => await _sharedLabels(event, emit),
         taskDetails: (event) async => await _taskDetails(event, emit),
@@ -50,14 +50,15 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     });
   }
 
-  TasksBloc.tasks(
-    this._activeTasksUseCase,
-    this._addTaskUseCase,
-  ) : super(const TasksState()) {
+  TasksBloc.tasks(this._activeTasksUseCase, this._addTaskUseCase,
+      this._updateTaskUseCase, this._deleteTaskUseCase)
+      : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
       await events.mapOrNull(
         activeTasks: (event) async => await _activeTasks(event, emit),
         addTask: (event) async => await _addTask(event, emit),
+        updateTask: (event) async => await _updateTask(event, emit),
+        deleteTask: (event) async => await _deleteTask(event, emit),
         reset: (event) async => emit(const TasksState()),
       );
     });
@@ -73,7 +74,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     this._deleteTaskUseCase,
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
-     await events.mapOrNull(
+      await events.mapOrNull(
         sharedLabels: (event) async => await _sharedLabels(event, emit),
         taskDetails: (event) async => await _taskDetails(event, emit),
         addTask: (event) async => await _addTask(event, emit),
@@ -143,14 +144,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   _addTask(_AddTask event, Emitter<TasksState> emitter) async {
     emitter(state.copyWith(status: Status.creating));
     final result = await _addTaskUseCase.invoke(
-      {
-        'content': event.content,
-        'description': event.description,
-        'project_id': event.projectId,
-        'section_id': event.sectionId,
-        'due_string': event.dueString,
-        'priority': event.priority,
-      }..removeWhere((key, value) => value == null),
+      event.task.toJson()..removeWhere((key, value) => value == null),
     );
     result.fold(
       (failure) => emitter(state.copyWith(

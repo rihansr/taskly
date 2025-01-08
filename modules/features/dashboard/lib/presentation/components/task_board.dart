@@ -1,58 +1,64 @@
-
-import 'package:core/styles/style.dart';
-import 'package:core/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:task/domain/models/task_model.dart';
 
-class TaskBoard extends StatelessWidget {
+class TaskCard extends StatelessWidget {
   final TaskModel task;
-  const TaskBoard({
+  const TaskCard({
     super.key,
     required this.task,
   });
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      decoration: style.defaultDecoration(context),
-      padding: const EdgeInsets.all(12),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            task.content ?? '',
-            style: theme.textTheme.titleSmall?.copyWith(
-              fontWeight: FontWeight.w500,
+    return Card(
+      elevation: 8,
+      margin: const EdgeInsets.symmetric(
+        vertical: 4,
+        horizontal: 12,
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              task.content ?? '',
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-          Row(
-            children: [
-              Container(
-                padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(3),
-                  border: Border.all(width: 1, color: Colors.black),
-                ),
-                child: Text(
-                  task.due?.date == null
-                      ? '- ---, ----'
-                      : DateFormat('d MMM yyyy').format(task.due!.date!),
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
+            const SizedBox(height: 8),
+            RichText(
+              text: TextSpan(
+                children: [
+                  if (task.commentCount != null) ...[
+                    WidgetSpan(
+                      child: Icon(
+                        Icons.comment_outlined,
+                        size: 18,
+                        color: theme.hintColor,
+                      ),
+                      alignment: PlaceholderAlignment.middle,
+                    ),
+                    TextSpan(text: ' ${task.commentCount}'),
+                  ],
+                  if (task.isCompleted ?? false) ...[
+                    const TextSpan(text: ' '),
+                    WidgetSpan(
+                      child: Icon(
+                        Icons.done_all,
+                        size: 18,
+                        color: theme.hintColor,
+                      ),
+                      alignment: PlaceholderAlignment.middle,
+                    ),
+                  ]
+                ],
+                style: theme.textTheme.labelLarge,
               ),
-              const Spacer(),
-              if(task.isCompleted ?? false) const Icon(
-                Icons.done_all,
-                color: Colors.black,
-                size: 18,
-              ),
-            ],
-          )
-        ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:core/styles/style.dart';
 import 'package:core/utils/enums.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:section/domain/models/section_model.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
@@ -69,19 +70,15 @@ class _SectionsViewState extends State<SectionsView> {
           }
         },
         builder: (context, state) {
-          if (state.status == Status.loading) {
-            return const Center(
-              child: Text('Sections Loading...'),
-            );
-          } else if (state.status == Status.success) {
+          if (state.sections.isEmpty && state.status == Status.loading) {
+            return const CupertinoActivityIndicator(radius: 20);
+          } else {
             return SafeArea(
               top: false,
               child: TasksBoardView(
                 sections: state.sections,
               ),
             );
-          } else {
-            return const SizedBox();
           }
         },
       ),

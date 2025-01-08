@@ -29,6 +29,15 @@ class ProjectsViewState extends State<ProjectsView>
   late AnimationController _animationController;
   late Animation<double> widthAnimation;
 
+  _toggle(){
+    setState(() {
+                    isCollapsed = !isCollapsed;
+                    isCollapsed
+                        ? _animationController.forward()
+                        : _animationController.reverse();
+                  });
+  }
+
   fetchAllSections(BuildContext context, ProjectsState state,
       [ProjectModel? project]) {
     final dashboard = context.read<DashboardBloc>();
@@ -48,6 +57,7 @@ class ProjectsViewState extends State<ProjectsView>
       context
           .read<SectionsBloc>()
           .add(SectionsEvent.allSections(projectId: currentProject!.id!));
+      if(!isCollapsed) _toggle();
     }
   }
 
@@ -75,8 +85,8 @@ class ProjectsViewState extends State<ProjectsView>
           gradient: LinearGradient(
             colors: [
               backgroundColor,
-              backgroundColor.withOpacity(0.75),
-              backgroundColor.withOpacity(0),
+              backgroundColor.withOpacity(0.95),
+              backgroundColor.withOpacity(0.85),
             ],
           ),
         ),
@@ -86,14 +96,7 @@ class ProjectsViewState extends State<ProjectsView>
             Align(
               alignment: Alignment.centerLeft,
               child: InkWell(
-                onTap: () {
-                  setState(() {
-                    isCollapsed = !isCollapsed;
-                    isCollapsed
-                        ? _animationController.forward()
-                        : _animationController.reverse();
-                  });
-                },
+                onTap: _toggle,
                 child: Container(
                   width: 60,
                   height: 60,

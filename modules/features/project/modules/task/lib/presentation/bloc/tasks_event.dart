@@ -7,12 +7,7 @@ class TasksEvent with _$TasksEvent {
   ) = _ActiveTasks;
   const factory TasksEvent.sharedLabels() = _SharedLabels;
   const factory TasksEvent.addTask({
-    required String content,
-    String? description,
-    required String projectId,
-    required String sectionId,
-    String? dueString,
-    int? priority,
+    required TaskModel task,
   }) = _AddTask;
   const factory TasksEvent.taskDetails({
     required String id,
