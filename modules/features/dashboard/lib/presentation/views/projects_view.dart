@@ -45,12 +45,14 @@ class ProjectsViewState extends State<ProjectsView>
       [ProjectModel? project]) {
     final dashboard = context.read<DashboardBloc>();
     var tasks = dashboard.state.sectionTasks;
-    var currentProject = project ?? dashboard.state.currentProject ?? (() {
-      final currentProject = sl<SharedPrefs>().currentProject;
-      return currentProject != null
-          ? ProjectModel.fromJson(currentProject)
-          : state.projects.firstOrNull;
-    }());
+    var currentProject = project ??
+        dashboard.state.currentProject ??
+        (() {
+          final currentProject = sl<SharedPrefs>().currentProject;
+          return currentProject != null
+              ? ProjectModel.fromJson(currentProject)
+              : state.projects.firstOrNull;
+        }());
 
     if (state.projects.isEmpty) {
       if (currentProject != null) dashboard.add(const DashboardEvent.reset());

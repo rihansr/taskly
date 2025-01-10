@@ -47,10 +47,11 @@ class _AddProjectViewState extends State<AddProjectView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: MediaQuery.of(context).viewInsets,
       child: Form(
         key: _formKey,
         child: ListView(
+          padding: const EdgeInsets.all(16),
           shrinkWrap: true,
           children: [
             AppBar(

@@ -49,12 +49,13 @@ class _AddSectionViewState extends State<AddSectionView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Container(
+      margin: MediaQuery.of(context).viewInsets,
       child: Form(
         key: _formKey,
         child: ListView(
           shrinkWrap: true,
+          padding: const EdgeInsets.all(16),
           children: [
             AppBar(
               title: Text(

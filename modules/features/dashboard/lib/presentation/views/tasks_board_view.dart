@@ -27,7 +27,7 @@ class TasksBoardView extends StatefulWidget {
   const TasksBoardView({
     super.key,
     required this.sections,
-});
+  });
 
   @override
   State<TasksBoardView> createState() => _TasksBoardViewState();
@@ -167,7 +167,12 @@ class _TasksBoardViewState extends State<TasksBoardView> {
                           BoardItemState state,
                         ) {
                           if (listIndex == oldListIndex) return;
-                          final newSection = widget.sections[listIndex!];
+                          final newSection = context
+                              .read<DashboardBloc>()
+                              .state
+                              .sectionTasks
+                              .keys
+                              .elementAt(listIndex!);
                           context.read<TasksBloc>().add(
                                 TasksEvent.addTask(
                                   task: task.clone(

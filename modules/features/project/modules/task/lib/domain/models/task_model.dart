@@ -133,7 +133,7 @@ class TaskModel extends Equatable {
       order: order ?? this.order,
       priority: priority ?? this.priority,
       projectId: projectId ?? this.projectId,
-      sectionId: sectionId ?? this.sectionId,
+      sectionId: sectionId,
       parentId: parentId ?? this.parentId,
       url: url ?? this.url,
     );
@@ -175,10 +175,6 @@ class TaskModel extends Equatable {
   @override
   List<Object?> get props {
     return [
-      creatorId,
-      createdAt,
-      assigneeId,
-      assignerId,
       commentCount,
       isCompleted,
       content,
@@ -186,13 +182,8 @@ class TaskModel extends Equatable {
       due,
       duration,
       id,
-      labels,
-      order,
-      priority,
       projectId,
       sectionId,
-      parentId,
-      url,
     ];
   }
 }

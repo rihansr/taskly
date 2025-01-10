@@ -52,7 +52,9 @@ class _AddTaskViewState extends State<AddTaskView> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+
       child: Form(
         key: _formKey,
         child: ListView(

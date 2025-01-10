@@ -7,13 +7,12 @@ import 'package:comment/domain/usecases/update_comment_usecase.dart';
 import 'package:comment/presentation/bloc/comments_bloc.dart';
 import 'package:core/styles/strings.dart';
 import 'package:core/utils/enums.dart';
-import 'package:core/utils/utils.dart' as utils;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/di/service_locator.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
 import '../../domain/models/task_model.dart';
+import '../components/comment_title.dart';
 
 class CommentsView extends StatefulWidget {
   final TaskModel task;
@@ -106,67 +105,28 @@ class _CommentsViewState extends State<CommentsView> {
                   itemCount: state.comments.length,
                   itemBuilder: (context, index) {
                     final comment = state.comments[index];
-                    return ListTile(
-                      onLongPress: () {
+                    return CommentTile(
+                      key: ValueKey(comment.id),
+                      comment: comment,
+                      onEdit: () {
                         setState(() {
                           _commentController.text = comment.content ?? '';
                           _updateComment = comment;
                         });
                       },
-                      contentPadding: const EdgeInsets.all(0),
-                      leading: CircleAvatar(
-                        backgroundColor: theme.disabledColor,
-                        child: const Icon(Icons.person),
-                      ),
-                      title: Text(comment.content ?? ''),
-                      subtitle: comment.postedAt != null
-                          ? Text(
-                              utils.DateFormat.yMd()
-                                  .add_jm()
-                                  .format(comment.postedAt!),
-                            )
-                          : null,
-                      dense: true,
-                      trailing: PopupMenuButton(
-                        itemBuilder: (context) {
-                          return [
-                            string.of(context).edit,
-                            string.of(context).remove,
-                          ].mapIndexed((i, e) {
-                            return PopupMenuItem(
-                              value: i,
-                              child: Text(e),
-                            );
-                          }).toList();
-                        },
-                        child: const Icon(
-                          CupertinoIcons.ellipsis_vertical,
-                          size: 18,
-                        ),
-                        onSelected: (i) {
-                          switch (i) {
-                            case 0:
-                              setState(() {
-                                _commentController.text = comment.content ?? '';
-                                _updateComment = comment;
-                              });
-                              break;
-                            case 1:
-                              _commentsBloc.add(
-                                CommentsEvent.deleteComment(
-                                  id: comment.id ?? '0',
-                                ),
-                              );
-                              if (_updateComment == comment) {
-                                setState(() {
-                                  _updateComment = null;
-                                  _commentController.clear();
-                                });
-                              }
-                              break;
-                          }
-                        },
-                      ),
+                      onDelete: () {
+                        _commentsBloc.add(
+                          CommentsEvent.deleteComment(
+                            id: comment.id ?? '0',
+                          ),
+                        );
+                        if (_updateComment == comment) {
+                          setState(() {
+                            _updateComment = null;
+                            _commentController.clear();
+                          });
+                        }
+                      },
                     );
                   },
                 ),
