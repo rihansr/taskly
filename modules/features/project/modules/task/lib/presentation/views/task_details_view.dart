@@ -1,4 +1,5 @@
 import 'package:core/styles/dimen.dart';
+import 'package:core/styles/strings.dart';
 import 'package:core/utils/enums.dart';
 import 'package:core/utils/utils.dart' as utils;
 import 'package:flutter/material.dart';
@@ -195,7 +196,8 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                               TextFieldWidget(
                                 key: const Key('task_title_field_key'),
                                 controller: _titleController,
-                                title: 'Title',
+                                title: string.of(context).title,
+                                hintText: string.of(context).titleHint,
                                 autoValidate: true,
                                 minLines: 1,
                                 maxLines: 3,
@@ -205,13 +207,14 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                                 validator: (value) =>
                                     utils.validator.validateField(
                                   value,
-                                  field: 'Content',
+                                  field: string.of(context).title,
                                 ),
                               ),
                               TextFieldWidget(
                                 key: const Key('task_description_field_key'),
                                 controller: _descriptionController,
-                                title: 'Description',
+                                title: string.of(context).description,
+                                hintText: string.of(context).descriptionHint,
                                 autoValidate: true,
                                 textCapitalization:
                                     TextCapitalization.sentences,
@@ -222,7 +225,8 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
                               TextFieldWidget(
                                 key: const Key('task_due_field_key'),
                                 controller: _dueDateController,
-                                title: 'Due Date',
+                                title: string.of(context).dueDate,
+                                hintText: string.of(context).dueDateHint,
                                 onTap: _datePicker,
                                 suffixIcon: IconButton(
                                   onPressed: () {

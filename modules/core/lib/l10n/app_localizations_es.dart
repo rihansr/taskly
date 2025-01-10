@@ -21,13 +21,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get cancel => 'Cancelar';
 
   @override
-  String get update => 'Actualizar';
-
-  @override
-  String get delete => 'Borrar';
-
-  @override
-  String get add => 'Añadir';
+  String get remove => 'Eliminar';
 
   @override
   String get save => 'Guardar';
@@ -46,6 +40,75 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get annonymous => 'Anónimo';
+
+  @override
+  String get addNewProject => 'Agregar nuevo proyecto';
+
+  @override
+  String get addProject => 'Agregar proyecto';
+
+  @override
+  String get updateProject => 'Actualizar proyecto';
+
+  @override
+  String get addNewSection => 'Agregar nueva sección';
+
+  @override
+  String get addSection => 'Agregar sección';
+
+  @override
+  String get updateSection => 'Actualizar sección';
+
+  @override
+  String get addNewTask => 'Agregar nueva tarea';
+
+  @override
+  String get addTask => 'Agregar tarea';
+
+  @override
+  String get updateTask => 'Actualizar tarea';
+
+  @override
+  String get reopen => 'Reabrir';
+
+  @override
+  String get complete => 'Completar';
+
+  @override
+  String get name => 'Nombre';
+
+  @override
+  String get title => 'Título';
+
+  @override
+  String get description => 'Descripción';
+
+  @override
+  String get dueDate => 'Fecha de vencimiento';
+
+  @override
+  String get comments => 'Comentarios';
+
+  @override
+  String get updatingComment => 'Actualizando comentario...';
+
+  @override
+  String get projectNameHint => '¿Cuál es el nombre del proyecto?';
+
+  @override
+  String get sectionNameHint => '¿Cuál es el nombre de la sección?';
+
+  @override
+  String get titleHint => '¿Cuál es el título de la tarea?';
+
+  @override
+  String get descriptionHint => 'Describe la tarea...';
+
+  @override
+  String get commentsHint => 'Añadir un comentario...';
+
+  @override
+  String get dueDateHint => '¿Cuándo vence la tarea?';
 
   @override
   String get someErrorOccured => '¡Se produjo algún error!';

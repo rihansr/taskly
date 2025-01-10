@@ -80,7 +80,7 @@ class _CollapsingListTileState extends State<CollapsingListTile> {
                 itemBuilder: (context) {
                   return [
                     string.of(context).edit,
-                    string.of(context).delete,
+                    string.of(context).remove,
                   ].mapIndexed((i, e) {
                     return PopupMenuItem(
                       value: i,

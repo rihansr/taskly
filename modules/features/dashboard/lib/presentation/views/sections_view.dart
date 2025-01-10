@@ -34,7 +34,7 @@ class _SectionsViewState extends State<SectionsView> {
               onPressed: () => context.router.pushNamed(Routes.settings),
             ),
             IconButton(
-              icon: const Icon(Icons.add),
+              icon: const Icon(Icons.add, size: 28),
               onPressed: () => showModalBottomSheet(
                 context: context,
                 enableDrag: true,

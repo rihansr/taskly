@@ -21,13 +21,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
-  String get update => 'Update';
-
-  @override
-  String get delete => 'Delete';
-
-  @override
-  String get add => 'Add';
+  String get remove => 'Remove';
 
   @override
   String get save => 'Save';
@@ -46,6 +40,75 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get annonymous => 'Annonymous';
+
+  @override
+  String get addNewProject => 'Add New Project';
+
+  @override
+  String get addProject => 'Add Project';
+
+  @override
+  String get updateProject => 'Update Project';
+
+  @override
+  String get addNewSection => 'Add New Section';
+
+  @override
+  String get addSection => 'Add Section';
+
+  @override
+  String get updateSection => 'Update Section';
+
+  @override
+  String get addNewTask => 'Add New Task';
+
+  @override
+  String get addTask => 'Add Task';
+
+  @override
+  String get updateTask => 'Update Task';
+
+  @override
+  String get reopen => 'Reopen';
+
+  @override
+  String get complete => 'Complete';
+
+  @override
+  String get name => 'Name';
+
+  @override
+  String get title => 'Title';
+
+  @override
+  String get description => 'Description';
+
+  @override
+  String get dueDate => 'Due Date';
+
+  @override
+  String get comments => 'Comments';
+
+  @override
+  String get updatingComment => 'Updating comment...';
+
+  @override
+  String get projectNameHint => 'What\'s the name of the project?';
+
+  @override
+  String get sectionNameHint => 'What\'s the name of the section?';
+
+  @override
+  String get titleHint => 'What\'s the title of the task?';
+
+  @override
+  String get descriptionHint => 'Describe the task...';
+
+  @override
+  String get commentsHint => 'Add a comment...';
+
+  @override
+  String get dueDateHint => 'When is the task due?';
 
   @override
   String get someErrorOccured => 'Some Error Occured!';

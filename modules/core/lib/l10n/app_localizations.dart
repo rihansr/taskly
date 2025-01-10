@@ -119,23 +119,11 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
-  /// No description provided for @update.
+  /// No description provided for @remove.
   ///
   /// In en, this message translates to:
-  /// **'Update'**
-  String get update;
-
-  /// No description provided for @delete.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete'**
-  String get delete;
-
-  /// No description provided for @add.
-  ///
-  /// In en, this message translates to:
-  /// **'Add'**
-  String get add;
+  /// **'Remove'**
+  String get remove;
 
   /// No description provided for @save.
   ///
@@ -172,6 +160,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Annonymous'**
   String get annonymous;
+
+  /// No description provided for @addNewProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Project'**
+  String get addNewProject;
+
+  /// No description provided for @addProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Project'**
+  String get addProject;
+
+  /// No description provided for @updateProject.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Project'**
+  String get updateProject;
+
+  /// No description provided for @addNewSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Section'**
+  String get addNewSection;
+
+  /// No description provided for @addSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Section'**
+  String get addSection;
+
+  /// No description provided for @updateSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Section'**
+  String get updateSection;
+
+  /// No description provided for @addNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Task'**
+  String get addNewTask;
+
+  /// No description provided for @addTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Task'**
+  String get addTask;
+
+  /// No description provided for @updateTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Task'**
+  String get updateTask;
+
+  /// No description provided for @reopen.
+  ///
+  /// In en, this message translates to:
+  /// **'Reopen'**
+  String get reopen;
+
+  /// No description provided for @complete.
+  ///
+  /// In en, this message translates to:
+  /// **'Complete'**
+  String get complete;
+
+  /// No description provided for @name.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get name;
+
+  /// No description provided for @title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get title;
+
+  /// No description provided for @description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get description;
+
+  /// No description provided for @dueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due Date'**
+  String get dueDate;
+
+  /// No description provided for @comments.
+  ///
+  /// In en, this message translates to:
+  /// **'Comments'**
+  String get comments;
+
+  /// No description provided for @updatingComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Updating comment...'**
+  String get updatingComment;
+
+  /// No description provided for @projectNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the name of the project?'**
+  String get projectNameHint;
+
+  /// No description provided for @sectionNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the name of the section?'**
+  String get sectionNameHint;
+
+  /// No description provided for @titleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What\'s the title of the task?'**
+  String get titleHint;
+
+  /// No description provided for @descriptionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe the task...'**
+  String get descriptionHint;
+
+  /// No description provided for @commentsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a comment...'**
+  String get commentsHint;
+
+  /// No description provided for @dueDateHint.
+  ///
+  /// In en, this message translates to:
+  /// **'When is the task due?'**
+  String get dueDateHint;
 
   /// No description provided for @someErrorOccured.
   ///

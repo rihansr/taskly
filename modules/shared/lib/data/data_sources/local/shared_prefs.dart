@@ -9,6 +9,20 @@ class SharedPrefs {
 
   static const String _settingsKey = "settings_sp_key";
   static const String _authTokenKey = "auth_token_sp_key";
+  static const String _currentProjectKey = "current_project_sp_key";
+
+  set currentProject(Map<String, dynamic>? data) {
+    data == null
+        ? _sharedPrefs.remove(_currentProjectKey)
+        : _sharedPrefs.setString(_currentProjectKey, json.encode(data));
+  }
+
+  Map<String, dynamic>? get currentProject {
+    final jsonString = _sharedPrefs.getString(_currentProjectKey);
+    return jsonString != null
+        ? json.decode(jsonString) as Map<String, dynamic>
+        : null;
+  }
 
   setTaskTracker(String id, Map<String, dynamic>? data) {
     data == null

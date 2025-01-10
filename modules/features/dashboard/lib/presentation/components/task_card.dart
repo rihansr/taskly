@@ -75,8 +75,10 @@ class TaskCard extends StatelessWidget {
           child: PopupMenuButton(
             itemBuilder: (context) {
               return [
-                task.isCompleted ?? false ? 'Reopen' : 'Close',
-                string.of(context).delete,
+                task.isCompleted ?? false
+                    ? string.of(context).reopen
+                    : string.of(context).complete,
+                string.of(context).remove,
               ].mapIndexed((i, e) {
                 return PopupMenuItem(
                   value: i,

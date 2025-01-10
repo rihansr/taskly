@@ -1,3 +1,4 @@
+import 'package:core/styles/strings.dart';
 import 'package:core/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
@@ -59,12 +60,13 @@ class _AddTaskViewState extends State<AddTaskView> {
           shrinkWrap: true,
           children: [
             AppBar(
-              title: const Text('Add New Task'),
+              title: Text(string.of(context).addNewTask),
             ),
             TextFieldWidget(
               key: const Key('task_title_field_key'),
               controller: _titleController,
-              title: 'Title',
+              title: string.of(context).title,
+              hintText: string.of(context).titleHint,
               autoValidate: true,
               minLines: 1,
               maxLines: 3,
@@ -73,13 +75,14 @@ class _AddTaskViewState extends State<AddTaskView> {
               onFieldSubmitted: (_) => _proceed(),
               validator: (value) => validator.validateField(
                 value,
-                field: 'Content',
+                field: string.of(context).title,
               ),
             ),
             TextFieldWidget(
               key: const Key('task_description_field_key'),
               controller: _descriptionDateController,
-              title: 'Description',
+              title: string.of(context).description,
+              hintText: string.of(context).descriptionHint,
               autoValidate: true,
               textCapitalization: TextCapitalization.sentences,
               keyboardType: TextInputType.multiline,
@@ -94,7 +97,7 @@ class _AddTaskViewState extends State<AddTaskView> {
                 padding: const EdgeInsets.all(12),
               ),
               onPressed: () => _proceed(),
-              child: const Text('Add Task'),
+              child: Text(string.of(context).addTask),
             ),
           ],
         ),

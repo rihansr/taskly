@@ -91,7 +91,7 @@ class _CommentsViewState extends State<CommentsView> {
             children: [
               const SizedBox(height: 16),
               Text(
-                'Comments',
+                string.of(context).comments,
                 style: theme.textTheme.labelLarge,
               ),
               Skeletonizer(
@@ -131,7 +131,7 @@ class _CommentsViewState extends State<CommentsView> {
                         itemBuilder: (context) {
                           return [
                             string.of(context).edit,
-                            string.of(context).delete,
+                            string.of(context).remove,
                           ].mapIndexed((i, e) {
                             return PopupMenuItem(
                               value: i,
@@ -177,7 +177,7 @@ class _CommentsViewState extends State<CommentsView> {
                   visualDensity: const VisualDensity(vertical: -4),
                   dense: true,
                   title: Text(
-                    'Editing comment...',
+                    string.of(context).updatingComment,
                     style: theme.textTheme.labelSmall,
                   ),
                   trailing: IconButton(
@@ -198,7 +198,7 @@ class _CommentsViewState extends State<CommentsView> {
                   Expanded(
                     child: TextFieldWidget(
                       controller: _commentController,
-                      hintText: 'Add a comment...',
+                      hintText: string.of(context).commentsHint,
                       onFieldSubmitted: (_) => _doComment(),
                     ),
                   ),

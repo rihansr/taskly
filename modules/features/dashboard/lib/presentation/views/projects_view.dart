@@ -7,6 +7,8 @@ import 'package:project/domain/models/project_model.dart';
 import 'package:project/presentation/bloc/projects_bloc.dart';
 import 'package:project/presentation/views/add_project_view.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
+import 'package:shared/data/data_sources/local/shared_prefs.dart';
+import 'package:shared/di/service_locator.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
 import 'package:task/presentation/bloc/tasks_bloc.dart';
@@ -43,8 +45,12 @@ class ProjectsViewState extends State<ProjectsView>
       [ProjectModel? project]) {
     final dashboard = context.read<DashboardBloc>();
     var tasks = dashboard.state.sectionTasks;
-    var currentProject =
-        project ?? dashboard.state.currentProject ?? state.projects.firstOrNull;
+    var currentProject = project ?? dashboard.state.currentProject ?? (() {
+      final currentProject = sl<SharedPrefs>().currentProject;
+      return currentProject != null
+          ? ProjectModel.fromJson(currentProject)
+          : state.projects.firstOrNull;
+    }());
 
     if (state.projects.isEmpty) {
       if (currentProject != null) dashboard.add(const DashboardEvent.reset());

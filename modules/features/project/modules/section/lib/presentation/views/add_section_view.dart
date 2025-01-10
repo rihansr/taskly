@@ -1,3 +1,4 @@
+import 'package:core/styles/strings.dart';
 import 'package:core/utils/validator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
@@ -56,19 +57,24 @@ class _AddSectionViewState extends State<AddSectionView> {
           shrinkWrap: true,
           children: [
             AppBar(
-              title:
-                  Text(widget._onEditMode ? 'Edit Section' : 'Add New Section'),
+              title: Text(
+                widget._onEditMode
+                    ? string.of(context).updateSection
+                    : string.of(context).addNewSection,
+              ),
             ),
             const SizedBox(height: 16),
             TextFieldWidget(
               key: const Key('section_name_field_key'),
               controller: _nameController,
+              title: string.of(context).name,
+              hintText: string.of(context).sectionNameHint,
               autoValidate: true,
               textCapitalization: TextCapitalization.words,
               onFieldSubmitted: (_) => _proceed(),
               validator: (value) => validator.validateField(
                 value,
-                field: 'Name',
+                field: string.of(context).name,
               ),
             ),
             const SizedBox(height: 16),
@@ -79,7 +85,9 @@ class _AddSectionViewState extends State<AddSectionView> {
               ),
               onPressed: () => _proceed(),
               child: Text(
-                widget._onEditMode ? 'Edit Section' : 'Add Section',
+                widget._onEditMode
+                    ? string.of(context).updateSection
+                    : string.of(context).addNewSection,
               ),
             ),
           ],
