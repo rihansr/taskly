@@ -34,7 +34,7 @@ The application uses `flutter_bloc` for state management, which helps in managin
 
 You can download the latest version of the application from the following links:
 
-- [Google Drive](https://drive.google.com/file/d/1DgOZVrJuyww-nRdiVe2T53dHYur9QAci/view?usp=sharing)
+- [Google Drive](https://drive.google.com/file/d/19-S9ty31UkXp76o34VMTDbbRyiTLUTtT/view?usp=sharing)
 
 ### Prerequisites
 
