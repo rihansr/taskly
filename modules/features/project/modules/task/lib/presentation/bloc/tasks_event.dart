@@ -5,7 +5,6 @@ class TasksEvent with _$TasksEvent {
   const factory TasksEvent.activeTasks(
     {required String projectId}
   ) = _ActiveTasks;
-  const factory TasksEvent.sharedLabels() = _SharedLabels;
   const factory TasksEvent.addTask({
     required TaskModel task,
   }) = _AddTask;

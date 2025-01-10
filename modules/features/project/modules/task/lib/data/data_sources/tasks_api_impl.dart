@@ -1,5 +1,4 @@
 import 'package:core/configs/configs.dart';
-import 'package:core/utils/utils.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared/data/data_sources/local/shared_prefs.dart';
 import 'package:shared/data/data_sources/remote/network.dart';
@@ -22,17 +21,6 @@ class TasksApiImpl extends TasksApi {
       token: sl<SharedPrefs>().token,
     );
     return TaskModel.fromJsonList(result.data ?? []);
-  }
-
-  @override
-  Future<List<String>> getAllSharedLabels() async {
-    final result = await sl<ApiHandler>().invoke(
-      baseUrl: appConfig.config["base_url"],
-      endpoint: '${serverEnv.labels}/shared',
-      method: Method.get,
-      token: sl<SharedPrefs>().token,
-    );
-    return List<String>.from(result.data ?? []);
   }
 
   @override
@@ -60,16 +48,12 @@ class TasksApiImpl extends TasksApi {
 
   @override
   Future<TaskModel> updateTask(TaskModel task) async {
-    debug.print(
-      task.toJson(),
-      tag: 'HELL',
-    );
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: "${serverEnv.tasks}/${task.id ?? "0"}",
       method: Method.post,
       token: sl<SharedPrefs>().token,
-      body: task.toJson(),
+      body: task.toMap()..removeWhere((key, value) => value == null),
     );
     return TaskModel.fromJson(result.data ?? {});
   }

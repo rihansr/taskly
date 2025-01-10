@@ -19,6 +19,7 @@ class TextFieldWidget extends StatefulWidget {
     this.prefix,
     this.prefixIcon,
     this.prefixText,
+    this.minLines,
     this.maxLines,
     this.keyboardType,
     this.focusNode,
@@ -59,6 +60,7 @@ class TextFieldWidget extends StatefulWidget {
   final Widget? prefix;
   final Widget? prefixIcon;
   final String? prefixText;
+  final int? minLines;
   final int? maxLines;
   final List<TextInputFormatter>? inputFormatters;
   final TextInputType? keyboardType;
@@ -120,9 +122,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             RichText(
                 text: TextSpan(
               text: widget.title,
-              style: widget.titleStyle ??
-                  theme.textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w600),
+              style: widget.titleStyle ?? theme.textTheme.labelLarge,
               children: widget.validator != null
                   ? [
                       TextSpan(
@@ -137,7 +137,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
           ],
           TextFormField(
             autofocus: widget.autoFocus,
-            readOnly: !widget.typeable,
+            readOnly: !widget.typeable || widget.onTap != null,
             textCapitalization: widget.textCapitalization,
             controller: widget.controller,
             obscureText: isPassword,
@@ -145,6 +145,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
             validator: widget.validator,
             keyboardType: widget.keyboardType,
             textInputAction: widget.textInputAction,
+            minLines: widget.minLines ?? 1,
             maxLines: widget.maxLines ?? 1,
             focusNode: widget.focusNode,
             onTap: widget.onTap,
@@ -169,10 +170,12 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
                   ?.copyWith(color: theme.colorScheme.error),
               hintStyle: widget.hintStyle ??
                   textStyle?.copyWith(color: theme.hintColor),
+              border: inputBorder(theme.colorScheme.outline),
               enabledBorder: inputBorder(theme.colorScheme.outline),
               disabledBorder: inputBorder(theme.disabledColor),
               focusedBorder: inputBorder(theme.colorScheme.primary),
               errorBorder: inputBorder(theme.colorScheme.error),
+              focusedErrorBorder: inputBorder(theme.colorScheme.error),
               isDense: false,
               contentPadding: widget.padding,
               errorMaxLines: 2,

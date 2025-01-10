@@ -5,12 +5,12 @@ import '../../domain/models/task_model.dart';
 
 class AddTaskView extends StatefulWidget {
   final String projectId;
-  final String sectionId;
+  final String? sectionId;
 
   const AddTaskView({
     super.key,
     required this.projectId,
-    required this.sectionId,
+    this.sectionId,
   });
 
   @override
@@ -19,20 +19,19 @@ class AddTaskView extends StatefulWidget {
 
 class _AddTaskViewState extends State<AddTaskView> {
   final _formKey = GlobalKey<FormState>();
-  late TextEditingController _contentController;
+  late TextEditingController _titleController;
   late TextEditingController _descriptionDateController;
-  late TaskModel _task;
 
   @override
   void initState() {
-    _contentController = TextEditingController();
+    _titleController = TextEditingController();
     _descriptionDateController = TextEditingController();
     super.initState();
   }
 
   @override
   void dispose() {
-    _contentController.dispose();
+    _titleController.dispose();
     _descriptionDateController.dispose();
     super.dispose();
   }
@@ -43,7 +42,7 @@ class _AddTaskViewState extends State<AddTaskView> {
         TaskModel(
           projectId: widget.projectId,
           sectionId: widget.sectionId,
-          content: _contentController.text,
+          content: _titleController.text,
           description: _descriptionDateController.text,
         ),
       );
@@ -52,23 +51,25 @@ class _AddTaskViewState extends State<AddTaskView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
+    return Material(
       child: Form(
         key: _formKey,
         child: ListView(
+          padding: const EdgeInsets.all(16),
           shrinkWrap: true,
           children: [
             AppBar(
               title: const Text('Add New Task'),
             ),
-            const SizedBox(height: 16),
             TextFieldWidget(
-              key: const Key('task_name_field_key'),
-              controller: _contentController,
-              title: 'Content',
+              key: const Key('task_title_field_key'),
+              controller: _titleController,
+              title: 'Title',
               autoValidate: true,
-              textCapitalization: TextCapitalization.words,
+              minLines: 1,
+              maxLines: 3,
+              textCapitalization: TextCapitalization.sentences,
+              keyboardType: TextInputType.multiline,
               onFieldSubmitted: (_) => _proceed(),
               validator: (value) => validator.validateField(
                 value,
@@ -76,12 +77,13 @@ class _AddTaskViewState extends State<AddTaskView> {
               ),
             ),
             TextFieldWidget(
-              key: const Key('task_name_field_key'),
+              key: const Key('task_description_field_key'),
               controller: _descriptionDateController,
               title: 'Description',
               autoValidate: true,
               textCapitalization: TextCapitalization.sentences,
               keyboardType: TextInputType.multiline,
+              minLines: 3,
               maxLines: 5,
               onFieldSubmitted: (_) => _proceed(),
             ),

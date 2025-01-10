@@ -5,7 +5,6 @@ import '../models/task_model.dart';
 abstract class TasksRepository {
   Future<Either<Failure, List<TaskModel>>> activeTasks(
       Map<String, dynamic> queryParams);
-  Future<Either<Failure, List<String>>> sharedLabels();
   Future<Either<Failure, TaskModel>> singleTask(String id);
   Future<Either<Failure, TaskModel>> createTask(Map<String, dynamic> data);
   Future<Either<Failure, TaskModel>> updateTask(TaskModel task);

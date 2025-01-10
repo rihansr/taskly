@@ -7,6 +7,5 @@ class TasksState with _$TasksState {
     String? errorMessage,
     @Default(<TaskModel>[]) List<TaskModel> tasks,
     @Default(TaskModel()) TaskModel task,
-    @Default(<String>[]) List<String> labels,
   }) = _TasksState;
 }

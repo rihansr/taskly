@@ -16,7 +16,6 @@ import 'domain/usecases/close_task_usecase.dart' as _i559;
 import 'domain/usecases/create_task_usecase.dart' as _i612;
 import 'domain/usecases/delete_task_usecase.dart' as _i757;
 import 'domain/usecases/reopen_task_usecase.dart' as _i471;
-import 'domain/usecases/shared_labels_usecase.dart' as _i376;
 import 'domain/usecases/single_task_usecase.dart' as _i236;
 import 'domain/usecases/update_task_usecase.dart' as _i1018;
 
@@ -27,8 +26,6 @@ class TaskPackageModule extends _i526.MicroPackageModule {
     gh.lazySingleton<_i656.TasksApiImpl>(() => _i656.TasksApiImpl());
     gh.lazySingleton<_i411.TasksRepository>(
         () => _i500.TasksRepositoryImpl(gh<_i656.TasksApiImpl>()));
-    gh.lazySingleton<_i376.SharedLabelsUseCase>(
-        () => _i376.SharedLabelsUseCase(gh<_i411.TasksRepository>()));
     gh.lazySingleton<_i1018.UpdateTaskUseCase>(
         () => _i1018.UpdateTaskUseCase(gh<_i411.TasksRepository>()));
     gh.lazySingleton<_i559.CloseTaskUseCase>(

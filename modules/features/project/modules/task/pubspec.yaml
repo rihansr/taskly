@@ -24,6 +24,8 @@ dependencies:
     path: ../../../../core
   shared:
     path: ../../../../shared
+  comment:
+    path: ../comment
 
 dev_dependencies:
   flutter_test:

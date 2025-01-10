@@ -1,11 +1,12 @@
+import 'package:core/styles/drawable.dart';
 import 'package:core/styles/style.dart';
 import 'package:core/utils/enums.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:section/domain/models/section_model.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:section/presentation/views/add_section_view.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
+import 'package:shared/presentation/widgets/widgets.dart';
 import 'package:task/presentation/bloc/tasks_bloc.dart';
 import '../bloc/dashboard_bloc.dart';
 import 'tasks_board_view.dart';
@@ -71,13 +72,16 @@ class _SectionsViewState extends State<SectionsView> {
         },
         builder: (context, state) {
           if (state.sections.isEmpty && state.status == Status.loading) {
-            return const CupertinoActivityIndicator(radius: 20);
-          } else {
-            return SafeArea(
-              top: false,
-              child: TasksBoardView(
-                sections: state.sections,
+            return Center(
+              child: LottieBuilder.asset(
+                drawable.loading,
+                width: 72,
+                height: 72,
               ),
+            );
+          } else {
+            return TasksBoardView(
+              sections: state.sections,
             );
           }
         },

@@ -51,9 +51,9 @@ class CommentsApiImpl extends CommentsApi {
     final result = await sl<ApiHandler>().invoke(
       baseUrl: appConfig.config["base_url"],
       endpoint: "${serverEnv.comments}/${comment.id ?? "0"}",
-      method: Method.put,
+      method: Method.post,
       token: sl<SharedPrefs>().token,
-      body: comment.toJson(),
+      body: comment.toJson()..removeWhere((key, value) => value == null),
     );
     return CommentModel.fromJson(result.data ?? {});
   }

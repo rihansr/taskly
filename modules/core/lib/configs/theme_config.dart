@@ -21,7 +21,7 @@ ThemeData theming(ThemeMode mode) {
       brightness: mode == ThemeMode.light ? Brightness.light : Brightness.dark,
       primary: colorPalette.primary,
       onPrimary: colorPalette.onPrimary,
-      onPrimaryContainer: colorPalette.onPrimaryContainer,
+      primaryContainer: colorPalette.primaryContainer,
       secondary: colorPalette.secondary,
       onSecondary: colorPalette.onSecondary,
       tertiary: colorPalette.tertiary,
@@ -210,7 +210,6 @@ ThemeData theming(ThemeMode mode) {
       hoverElevation: 2,
       highlightElevation: 2,
       iconSize: 18,
-      
       shape: const StadiumBorder(),
     ),
     popupMenuTheme: const PopupMenuThemeData().copyWith(
@@ -279,22 +278,22 @@ ThemeData theming(ThemeMode mode) {
         fontWeight: FontWeight.w400,
       ),
       labelLarge: TextStyle(
-        fontSize: 12,
+        fontSize: 14,
         height: 1.5,
         color: colorPalette.paragraph,
         fontWeight: FontWeight.w400,
       ),
       labelMedium: TextStyle(
-        fontSize: 12,
+        fontSize: 13,
         height: 1.33,
         letterSpacing: 0.5,
         color: colorPalette.subtitle,
         fontWeight: FontWeight.w400,
       ),
       labelSmall: TextStyle(
-        fontSize: 10,
+        fontSize: 12,
         height: 1.8,
-        color: colorPalette.subtitle,
+        color: colorPalette.headline,
         fontWeight: FontWeight.w400,
       ),
       bodyLarge: TextStyle(

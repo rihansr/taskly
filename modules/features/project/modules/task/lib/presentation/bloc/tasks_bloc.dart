@@ -8,7 +8,6 @@ import '../../domain/usecases/close_task_usecase.dart';
 import '../../domain/usecases/create_task_usecase.dart';
 import '../../domain/usecases/delete_task_usecase.dart';
 import '../../domain/usecases/reopen_task_usecase.dart';
-import '../../domain/usecases/shared_labels_usecase.dart';
 import '../../domain/usecases/single_task_usecase.dart';
 import '../../domain/usecases/update_task_usecase.dart';
 part 'tasks_event.dart';
@@ -17,7 +16,6 @@ part 'tasks_bloc.freezed.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   late ActiveTasksUseCase _activeTasksUseCase;
-  late SharedLabelsUseCase _sharedLabelsUseCase;
   late SingleTaskUseCase _singleTaskUseCase;
   late final CreateTaskUseCase _addTaskUseCase;
   late final UpdateTaskUseCase _updateTaskUseCase;
@@ -27,7 +25,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
   TasksBloc(
     this._activeTasksUseCase,
-    this._sharedLabelsUseCase,
     this._singleTaskUseCase,
     this._addTaskUseCase,
     this._updateTaskUseCase,
@@ -38,7 +35,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     on<TasksEvent>((events, emit) async {
       await events.map(
         activeTasks: (event) async => await _activeTasks(event, emit),
-        sharedLabels: (event) async => await _sharedLabels(event, emit),
         taskDetails: (event) async => await _taskDetails(event, emit),
         addTask: (event) async => await _addTask(event, emit),
         updateTask: (event) async => await _updateTask(event, emit),
@@ -65,7 +61,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   TasksBloc.single(
-    this._sharedLabelsUseCase,
     this._singleTaskUseCase,
     this._addTaskUseCase,
     this._updateTaskUseCase,
@@ -75,7 +70,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   ) : super(const TasksState()) {
     on<TasksEvent>((events, emit) async {
       await events.mapOrNull(
-        sharedLabels: (event) async => await _sharedLabels(event, emit),
         taskDetails: (event) async => await _taskDetails(event, emit),
         addTask: (event) async => await _addTask(event, emit),
         updateTask: (event) async => await _updateTask(event, emit),
@@ -103,22 +97,6 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         state.copyWith(
           status: Status.success,
           tasks: tasks,
-        ),
-      ),
-    );
-  }
-
-  _sharedLabels(_SharedLabels event, Emitter<TasksState> emitter) async {
-    final result = await _sharedLabelsUseCase.invoke();
-    result.fold(
-      (failure) => emitter(state.copyWith(
-        status: Status.initial,
-        errorMessage: failure.errorMessage,
-      )),
-      (labels) => emitter(
-        state.copyWith(
-          status: Status.success,
-          labels: labels,
         ),
       ),
     );

@@ -120,7 +120,7 @@ class CommentsBloc extends Bloc<CommentsEvent, CommentsState> {
         state.copyWith(
           status: Status.success,
           comment: comment,
-          comments: state.comments..add(comment),
+          comments: [...state.comments, comment],
         ),
       ),
     );

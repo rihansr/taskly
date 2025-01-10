@@ -53,7 +53,7 @@ class SectionsApiImpl extends SectionsApi {
       endpoint: "${serverEnv.sections}/${section.id ?? "0"}",
       method: Method.post,
       token: sl<SharedPrefs>().token,
-      body: section.toJson(),
+      body: section.toJson()..removeWhere((key, value) => value == null),
     );
     return SectionModel.fromJson(result.data ?? {});
   }

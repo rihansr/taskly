@@ -86,6 +86,48 @@ class TaskModel extends Equatable {
       description: description ?? this.description,
       due: due ?? this.due,
       duration: duration ?? this.duration,
+      id: id ?? this.id,
+      labels: labels ?? this.labels,
+      order: order ?? this.order,
+      priority: priority ?? this.priority,
+      projectId: projectId ?? this.projectId,
+      sectionId: sectionId ?? this.sectionId,
+      parentId: parentId ?? this.parentId,
+      url: url ?? this.url,
+    );
+  }
+
+  TaskModel clone({
+    String? creatorId,
+    DateTime? createdAt,
+    String? assigneeId,
+    String? assignerId,
+    int? commentCount,
+    bool? isCompleted,
+    String? content,
+    String? description,
+    DueModel? due,
+    DurationModel? duration,
+    String? id,
+    List<String>? labels,
+    int? order,
+    int? priority,
+    String? projectId,
+    String? sectionId,
+    String? parentId,
+    String? url,
+  }) {
+    return TaskModel(
+      creatorId: creatorId ?? this.creatorId,
+      createdAt: createdAt ?? this.createdAt,
+      assigneeId: assigneeId ?? this.assigneeId,
+      assignerId: assignerId ?? this.assignerId,
+      commentCount: commentCount ?? this.commentCount,
+      isCompleted: isCompleted ?? this.isCompleted,
+      content: content ?? this.content,
+      description: description ?? this.description,
+      due: due ?? this.due,
+      duration: duration ?? this.duration,
       id: id,
       labels: labels ?? this.labels,
       order: order ?? this.order,
@@ -102,6 +144,27 @@ class TaskModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$TaskModelToJson(this);
 
+  Map<String, dynamic> toMap() => {
+        "creator_id": creatorId,
+        "created_at": createdAt?.toIso8601String(),
+        "assignee_id": assigneeId,
+        "assigner_id": assignerId,
+        "comment_count": commentCount,
+        "is_completed": isCompleted,
+        "content": content,
+        "description": description,
+        ...due?.toMap() ?? {},
+        ...duration?.toMap() ?? {},
+        "id": id,
+        "labels": labels,
+        "order": order,
+        "priority": priority,
+        "project_id": projectId,
+        "section_id": sectionId,
+        "parent_id": parentId,
+        "url": url,
+      };
+
   static List<TaskModel> fromJsonList(List<dynamic> json) {
     return json.map((e) => TaskModel.fromJson(e)).toList();
   }
@@ -110,10 +173,26 @@ class TaskModel extends Equatable {
   bool get stringify => true;
 
   @override
-  List<Object?> get props => [
-        id,
-        projectId,
-        sectionId,
-        parentId,
-      ];
+  List<Object?> get props {
+    return [
+      creatorId,
+      createdAt,
+      assigneeId,
+      assignerId,
+      commentCount,
+      isCompleted,
+      content,
+      description,
+      due,
+      duration,
+      id,
+      labels,
+      order,
+      priority,
+      projectId,
+      sectionId,
+      parentId,
+      url,
+    ];
+  }
 }

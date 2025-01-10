@@ -3,6 +3,7 @@ import 'package:project/domain/models/project_model.dart';
 import 'package:section/domain/models/section_model.dart';
 import 'package:shared/presentation/bloc/bloc.dart';
 import 'package:task/domain/models/task_model.dart';
+import 'package:core/utils/utils.dart';
 part 'dashboard_event.dart';
 part 'dashboard_state.dart';
 part 'dashboard_bloc.freezed.dart';
@@ -23,11 +24,23 @@ class DashboardBloc extends Bloc<DashboardEvent, DashboardState> {
   }
 
   _addSectionTasks(_AddSectionTasks event, Emitter<DashboardState> emitter) {
-    final sectionTasks = <SectionModel, List<TaskModel>>{};
-    for (final section in event.sections) {
-      final tasks =
-          event.tasks.where((task) => task.sectionId == section.id).toList();
-      sectionTasks[section] = tasks;
+    final sectionTasks = {
+      SectionModel(
+        projectId: state.currentProject?.id,
+        name: 'Backlog',
+      ): <TaskModel>[], //
+      ...{for (var section in event.sections) section: <TaskModel>[]}
+    };
+
+    for (final task in event.tasks) {
+      final section = event.sections.firstWhereOrNull(
+        (section) => section.id == task.sectionId,
+      );
+      if(section == null){
+        sectionTasks[sectionTasks.keys.first]?.add(task);
+      } else {
+        sectionTasks[section]?.add(task);
+      }
     }
     emitter(state.copyWith(sectionTasks: sectionTasks));
   }

@@ -1,5 +1,6 @@
 import 'package:core/styles/dimen.dart';
 import 'package:core/styles/style.dart';
+import 'package:core/utils/constants.dart';
 import 'package:core/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:project/domain/models/project_model.dart';
@@ -29,13 +30,13 @@ class ProjectsViewState extends State<ProjectsView>
   late AnimationController _animationController;
   late Animation<double> widthAnimation;
 
-  _toggle(){
+  _toggle() {
     setState(() {
-                    isCollapsed = !isCollapsed;
-                    isCollapsed
-                        ? _animationController.forward()
-                        : _animationController.reverse();
-                  });
+      isCollapsed = !isCollapsed;
+      isCollapsed
+          ? _animationController.forward()
+          : _animationController.reverse();
+    });
   }
 
   fetchAllSections(BuildContext context, ProjectsState state,
@@ -52,20 +53,24 @@ class ProjectsViewState extends State<ProjectsView>
         context.read<TasksBloc>().add(const TasksEvent.reset());
       }
     } else {
+      if (!state.projects.contains(currentProject)) {
+        currentProject = state.projects.firstOrNull;
+      }
       dashboard.add(DashboardEvent.assignProject(currentProject));
+
       if (currentProject?.id == null) return;
       context
           .read<SectionsBloc>()
           .add(SectionsEvent.allSections(projectId: currentProject!.id!));
-      if(!isCollapsed) _toggle();
+      if (!isCollapsed) _toggle();
     }
   }
 
   @override
   void initState() {
     super.initState();
-    _animationController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+    _animationController =
+        AnimationController(vsync: this, duration: kDefaultDuration);
     widthAnimation = Tween<double>(begin: dimen.width * .6, end: minWidth)
         .animate(_animationController);
     context.read<ProjectsBloc>().add(const ProjectsEvent.allProjects());

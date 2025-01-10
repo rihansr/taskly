@@ -17,6 +17,11 @@ class DurationModel extends Equatable {
 
   Map<String, dynamic> toJson() => _$DurationModelToJson(this);
 
+  Map<String, dynamic> toMap() => {
+        'duration': amount,
+        'duration_unit': unit,
+      };
+
   @override
   bool get stringify => true;
 

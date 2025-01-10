@@ -24,6 +24,25 @@ class CommentModel extends Equatable {
     this.attachment,
   });
 
+  // copy with method
+  CommentModel copyWith({
+    String? content,
+    String? id,
+    DateTime? postedAt,
+    dynamic projectId,
+    String? taskId,
+    AttachmentModel? attachment,
+  }) {
+    return CommentModel(
+      content: content ?? this.content,
+      id: id ?? this.id,
+      postedAt: postedAt ?? this.postedAt,
+      projectId: projectId ?? this.projectId,
+      taskId: taskId ?? this.taskId,
+      attachment: attachment ?? this.attachment,
+    );
+  }
+
   factory CommentModel.fromJson(Map<String, dynamic> json) =>
       _$CommentModelFromJson(json);
 
