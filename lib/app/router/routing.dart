@@ -3,6 +3,7 @@ import 'package:core/service/navigation_service.dart';
 import 'package:dashboard/presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:settings/domain/presentation/views/settings_screen.dart';
 import 'package:shared/presentation/widgets/widgets.dart';
 import 'package:splash/splash.dart';
 
@@ -22,6 +23,13 @@ final GoRouter routing = GoRouter(
       path: Routes.dashboard,
       builder: (BuildContext context, GoRouterState state) {
         return const DashboardScreen();
+      },
+    ),
+    GoRoute(
+      name: Routes.settings,
+      path: Routes.settings,
+      builder: (BuildContext context, GoRouterState state) {
+        return const SettingsScreen();
       },
     ),
   ],

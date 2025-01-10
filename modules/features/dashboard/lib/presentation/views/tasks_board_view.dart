@@ -190,6 +190,19 @@ class _TasksBoardViewState extends State<TasksBoardView> {
                         item: TaskCard(
                           key: ValueKey(task.id),
                           task: task,
+                          onComplete: (shouldClose) {
+                            context.read<TasksBloc>().add(
+                                  shouldClose
+                                      ? TasksEvent.closeTask(id: task.id ?? '0')
+                                      : TasksEvent.reopenTask(
+                                          id: task.id ?? '0'),
+                                );
+                          },
+                          onDelete: () {
+                            context.read<TasksBloc>().add(
+                                  TasksEvent.deleteTask(id: task.id ?? '0'),
+                                );
+                          },
                         ),
                       ),
                     )
@@ -198,6 +211,7 @@ class _TasksBoardViewState extends State<TasksBoardView> {
                   margin: const EdgeInsets.all(12),
                   alignment: Alignment.centerRight,
                   child: FloatingActionButton.small(
+                    heroTag: null,
                     onPressed: () => showModalBottomSheet(
                       context: context,
                       enableDrag: true,

@@ -15,8 +15,11 @@ import 'package:section/domain/usecases/single_section_usecase.dart';
 import 'package:section/domain/usecases/update_section_usecase.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
 import 'package:task/domain/usecases/active_tasks_usecase.dart';
+import 'package:task/domain/usecases/close_task_usecase.dart';
 import 'package:task/domain/usecases/create_task_usecase.dart';
 import 'package:task/domain/usecases/delete_task_usecase.dart';
+import 'package:task/domain/usecases/reopen_task_usecase.dart';
+import 'package:task/domain/usecases/single_task_usecase.dart';
 import 'package:task/domain/usecases/update_task_usecase.dart';
 import 'package:task/presentation/bloc/tasks_bloc.dart';
 import 'package:settings/settings.dart';
@@ -68,10 +71,13 @@ class MyApp extends StatelessWidget {
           ),
         ),
         BlocProvider(
-          create: (context) => TasksBloc.tasks(
+          create: (context) => TasksBloc(
             sl<ActiveTasksUseCase>(),
+            sl<SingleTaskUseCase>(),
             sl<CreateTaskUseCase>(),
             sl<UpdateTaskUseCase>(),
+            sl<CloseTaskUseCase>(),
+            sl<ReopenTaskUseCase>(),
             sl<DeleteTaskUseCase>(),
           ),
         ),

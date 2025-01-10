@@ -49,7 +49,7 @@ class _CollapsingListTileState extends State<CollapsingListTile> {
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(Radius.circular(8.0)),
           color:
-              widget.isSelected ? theme.colorScheme.onPrimaryContainer : null,
+              widget.isSelected ? theme.colorScheme.primaryContainer : null,
         ),
         width: widthAnimation.value,
         margin: const EdgeInsets.symmetric(horizontal: 8.0),

@@ -93,7 +93,7 @@ class _TimeTrackerState extends State<TimeTracker>
       child: Container(
         decoration: ShapeDecoration(
           shape: const StadiumBorder(),
-          color: theme.colorScheme.primaryContainer,
+          color: theme.colorScheme.primary.withOpacity(0.1),
         ),
         padding: const EdgeInsets.only(right: 10),
         margin: const EdgeInsets.only(right: 16),

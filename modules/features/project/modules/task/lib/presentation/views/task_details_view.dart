@@ -53,7 +53,6 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
   @override
   void initState() {
     _setTask(widget.task);
-    _setTaskTracker();
     _tasksBloc.add(TasksEvent.taskDetails(id: _task.id ?? '0'));
     super.initState();
   }
@@ -65,14 +64,20 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
     _dueDate = task.due?.date;
     _dueDateController = TextEditingController(text: task.due?.string);
     _duration = Duration(seconds: task.duration?.amount ?? 0);
+    _setTaskTracker();
   }
 
   _setTaskTracker() {
     final data = sl<SharedPrefs>().getTaskTracker(_task.id!);
     _taskTracker = data == null ? null : TaskTrackerModel.fromJson(data);
     if (_taskTracker != null) {
-      int seconds = DateTime.now().difference(_taskTracker!.time).inSeconds;
-      _duration = Duration(seconds: _duration.inSeconds + seconds);
+      if (_task.isCompleted ?? false) {
+        _taskTracker = null;
+        sl<SharedPrefs>().setTaskTracker(_task.id!, null);
+      } else {
+        int seconds = DateTime.now().difference(_taskTracker!.time).inSeconds;
+        _duration = Duration(seconds: _duration.inSeconds + seconds);
+      }
     }
   }
 
@@ -122,120 +127,132 @@ class _TaskDetailsViewState extends State<TaskDetailsView> {
               );
         }
       },
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.close),
-            onPressed: _proceed,
+      child: Backdrop(
+        child: Scaffold(
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.close),
+              onPressed: _proceed,
+            ),
+            actions: _task.isCompleted ?? false
+                ? null
+                : [
+                    TimeTracker(
+                      duration: _duration,
+                      initiallyStart: _taskTracker != null,
+                      onStart: () {
+                        if (_taskTracker == null) {
+                          _taskTracker = TaskTrackerModel(
+                            id: _task.id!,
+                            time: DateTime.now(),
+                          );
+                          sl<SharedPrefs>().setTaskTracker(
+                              _task.id!, _taskTracker!.toJson());
+                        }
+                      },
+                      onStop: (duration) {
+                        _duration = duration;
+                        _taskTracker = null;
+                        sl<SharedPrefs>().setTaskTracker(_task.id!, null);
+                        _task = _task.copyWith(
+                          duration: DurationModel(
+                            amount: duration.inSeconds,
+                            unit: 'minute',
+                          ),
+                        );
+                      },
+                    ),
+                  ],
           ),
-          actions: [
-            TimeTracker(
-              duration: _duration,
-              initiallyStart: _taskTracker != null,
-              onStart: () {
-                if (_taskTracker == null) {
-                  _taskTracker = TaskTrackerModel(
-                    id: _task.id!,
-                    time: DateTime.now(),
-                  );
-                  sl<SharedPrefs>()
-                      .setTaskTracker(_task.id!, _taskTracker!.toJson());
+          body: SafeArea(
+            bottom: false,
+            child: BlocConsumer<TasksBloc, TasksState>(
+              bloc: _tasksBloc,
+              listener: (BuildContext context, TasksState state) {
+                if (state.status == Status.success) {
+                  _setTask(state.task);
                 }
               },
-              onStop: (duration) {
-                _duration = duration;
-                _taskTracker = null;
-                sl<SharedPrefs>().setTaskTracker(_task.id!, null);
-                _task = _task.copyWith(
-                  duration: DurationModel(
-                    amount: duration.inSeconds,
-                    unit: 'minute',
+              builder: (context, state) {
+                return Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    16.0,
+                    16.0,
+                    16.0,
+                    dimen.bottom(16.0),
+                  ),
+                  child: NestedScrollView(
+                    headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                      SliverToBoxAdapter(
+                        child: Form(
+                          key: _formKey,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              TextFieldWidget(
+                                key: const Key('task_title_field_key'),
+                                controller: _titleController,
+                                title: 'Title',
+                                autoValidate: true,
+                                minLines: 1,
+                                maxLines: 3,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                keyboardType: TextInputType.multiline,
+                                validator: (value) =>
+                                    utils.validator.validateField(
+                                  value,
+                                  field: 'Content',
+                                ),
+                              ),
+                              TextFieldWidget(
+                                key: const Key('task_description_field_key'),
+                                controller: _descriptionController,
+                                title: 'Description',
+                                autoValidate: true,
+                                textCapitalization:
+                                    TextCapitalization.sentences,
+                                keyboardType: TextInputType.multiline,
+                                minLines: 3,
+                                maxLines: 5,
+                              ),
+                              TextFieldWidget(
+                                key: const Key('task_due_field_key'),
+                                controller: _dueDateController,
+                                title: 'Due Date',
+                                onTap: _datePicker,
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    if (_dueDate == null) return;
+                                    setState(() {
+                                      _dueDate = null;
+                                      _dueDateController.clear();
+                                    });
+                                  },
+                                  icon: Icon(
+                                    _dueDate == null
+                                        ? Icons.calendar_today
+                                        : Icons.clear,
+                                    size: 18,
+                                    color: theme.hintColor,
+                                  ),
+                                ),
+                                keyboardType: TextInputType.datetime,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                    body: CommentsView(task: _task),
                   ),
                 );
               },
             ),
-          ],
-        ),
-        body: BlocConsumer<TasksBloc, TasksState>(
-          bloc: _tasksBloc,
-          listener: (BuildContext context, TasksState state) {
-            if (state.status == Status.success) {
-              _setTask(state.task);
-            }
-          },
-          builder: (context, state) {
-            return Padding(
-              padding: EdgeInsets.fromLTRB(
-                16.0,
-                16.0,
-                16.0,
-                dimen.bottom(16.0),
-              ),
-              child: NestedScrollView(
-                headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverToBoxAdapter(
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          TextFieldWidget(
-                            key: const Key('task_title_field_key'),
-                            controller: _titleController,
-                            title: 'Title',
-                            autoValidate: true,
-                            minLines: 1,
-                            maxLines: 3,
-                            textCapitalization: TextCapitalization.sentences,
-                            keyboardType: TextInputType.multiline,
-                            validator: (value) => utils.validator.validateField(
-                              value,
-                              field: 'Content',
-                            ),
-                          ),
-                          TextFieldWidget(
-                            key: const Key('task_description_field_key'),
-                            controller: _descriptionController,
-                            title: 'Description',
-                            autoValidate: true,
-                            textCapitalization: TextCapitalization.sentences,
-                            keyboardType: TextInputType.multiline,
-                            minLines: 3,
-                            maxLines: 5,
-                          ),
-                          TextFieldWidget(
-                            key: const Key('task_due_field_key'),
-                            controller: _dueDateController,
-                            title: 'Due Date',
-                            onTap: _datePicker,
-                            suffixIcon: IconButton(
-                              onPressed: () {
-                                if (_dueDate == null) return;
-                                setState(() {
-                                  _dueDate = null;
-                                  _dueDateController.clear();
-                                });
-                              },
-                              icon: Icon(
-                                _dueDate == null
-                                    ? Icons.calendar_today
-                                    : Icons.clear,
-                                size: 18,
-                                color: theme.hintColor,
-                              ),
-                            ),
-                            keyboardType: TextInputType.datetime,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-                body: CommentsView(task: _task),
-              ),
-            );
-          },
+          ),
         ),
       ),
     );

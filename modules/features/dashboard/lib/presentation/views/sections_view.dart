@@ -1,6 +1,8 @@
 import 'package:core/styles/drawable.dart';
 import 'package:core/styles/style.dart';
 import 'package:core/utils/enums.dart';
+import 'package:core/utils/extensions/extensions.dart';
+import 'package:core/router/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:section/domain/models/section_model.dart';
 import 'package:section/presentation/bloc/sections_bloc.dart';
@@ -24,8 +26,13 @@ class _SectionsViewState extends State<SectionsView> {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) => [
         SliverAppBar(
+          primary: true,
           pinned: true,
           actions: [
+            IconButton(
+              icon: const Icon(Icons.settings_outlined),
+              onPressed: () => context.router.pushNamed(Routes.settings),
+            ),
             IconButton(
               icon: const Icon(Icons.add),
               onPressed: () => showModalBottomSheet(
